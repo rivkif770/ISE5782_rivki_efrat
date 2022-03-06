@@ -31,8 +31,6 @@ public class Vector extends Point {
         return new Vector(this.add(vector).xyz);
     }
     public Vector scale (double num){
-        if (num==0)
-            throw new IllegalArgumentException("vector 0");
         return new Vector(xyz.d1*num, xyz.d2*num, xyz.d3*num);
     }
     public double dotProduct(Vector vector){

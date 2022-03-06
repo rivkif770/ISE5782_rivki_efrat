@@ -3,7 +3,7 @@ import java.math.*;
 import java.util.Objects;
 import primitives.Double3;
 public class Point {
-    protected final Double3 xyz;
+    protected Double3 xyz;
 
     public Point(double x, double y, double z) {
         xyz=new Double3(x,y,z);
