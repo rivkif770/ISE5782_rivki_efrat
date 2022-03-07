@@ -29,10 +29,13 @@ public class Plane implements Geometry {
      * @param y-point2
      * @param z-point3
      */
-    public Plane(Point x,Point y,Point z){
-        //normal = x.subtract(y).crossProduct(y.subtract(z));
-        normal = null;
-        p0 = x;
+    public Plane(Point p1,Point p2,Point p3){
+        p0 = p1;
+        Vector v1 = p2.subtract(p1);  //vector from p1 towards p2
+        Vector v2 = p3.subtract(p1);  //vector from p1 towards p3
+
+        Vector n = v1.crossProduct(v2);
+        normal = n.normalize();
     }
 
     /**
