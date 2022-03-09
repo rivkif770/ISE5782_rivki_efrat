@@ -1,5 +1,6 @@
 package geometries;
 
+import primitives.Double3;
 import primitives.Point;
 import primitives.Vector;
 
@@ -17,7 +18,7 @@ public class Plane implements Geometry {
      */
     public Plane(Point p0, Vector normal) {
         this.p0 = p0;
-        if(normal.length()==1)
+        if(normal.length() == 1)
             this.normal = normal;
         else
             normal.normalize();
@@ -25,16 +26,21 @@ public class Plane implements Geometry {
 
     /**
      * constructor plan
-     * @param x-point1
-     * @param y-point2
-     * @param z-point3
+     * @param p1 -point1
+     * @param p2 -point2
+     * @param p3 -point3
      */
     public Plane(Point p1,Point p2,Point p3){
         p0 = p1;
+        if(p1.equals(p2) || p1.equals(p3) || p2.equals(p3))
+            throw new IllegalArgumentException("Two of the points are identical");
+
         Vector v1 = p2.subtract(p1);  //vector from p1 towards p2
         Vector v2 = p3.subtract(p1);  //vector from p1 towards p3
 
         Vector n = v1.crossProduct(v2);
+        if(v1.normalize().equals(v2.normalize()))
+            throw new IllegalArgumentException("There is a linear dependence between the vectors");
         normal = n.normalize();
     }
 

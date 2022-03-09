@@ -1,6 +1,7 @@
 package geometries;
 
 import java.util.List;
+import java.util.Objects;
 
 import primitives.*;
 import static primitives.Util.*;
@@ -87,5 +88,21 @@ public class Polygon implements Geometry {
 	@Override
 	public Vector getNormal(Point point) {
 		return plane.getNormal();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Polygon polygon = (Polygon) o;
+		return size == polygon.size && vertices.equals(polygon.vertices) && plane.equals(polygon.plane);
+	}
+
+	@Override
+	public String toString() {
+		return "Polygon: " +
+				"\nvertices: " + vertices +
+				"\nplane: " + plane +
+				"\nsize: " + size;
 	}
 }

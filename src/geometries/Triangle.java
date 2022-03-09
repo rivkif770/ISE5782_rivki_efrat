@@ -3,7 +3,10 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.Objects;
+
 public class Triangle extends Polygon{
+
     /**
      * constructor
      * @param p1 Vertex 1
@@ -22,7 +25,16 @@ public class Triangle extends Polygon{
     public Vector getNormal(Point point){return super.getNormal(point);}
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        return super.equals(o);
+    }
+
+    @Override
     public String toString() {
-        return "Triangle{}";
+        return "Triangle: \n" +
+                super.toString();
     }
 }

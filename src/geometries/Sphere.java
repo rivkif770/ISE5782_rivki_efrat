@@ -3,9 +3,34 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+import java.util.Objects;
+
 public class Sphere implements Geometry{
     private Point center;
     private double radius;
+
+    public Sphere(Point center, double radius) {
+        this.center = center;
+        if(radius == 0)
+            throw new IllegalArgumentException("Invalid radius");
+        this.radius = radius;
+    }
+
+    /**
+     * get center
+     * @return center point of sphere
+     */
+    public Point getCenter() {
+        return center;
+    }
+
+    /**
+     * radius
+     * @return radius of sphere
+     */
+    public double getRadius() {
+        return radius;
+    }
 
     /**
      * Returns normal to point
@@ -21,14 +46,26 @@ public class Sphere implements Geometry{
     }
 
     /**
+     * Comparison between spheres
+     * @param o
+     * @return
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Sphere sphere = (Sphere) o;
+        return Double.compare(sphere.radius, radius) == 0 && center.equals(sphere.center);
+    }
+
+    /**
      * toString
      * @return
      */
     @Override
     public String toString() {
-        return "Sphere{" +
-                "center=" + center +
-                ", radius=" + radius +
-                '}';
+        return "Sphere: " +
+                "\ncenter: " + center +
+                "\nradius: " + radius;
     }
 }
