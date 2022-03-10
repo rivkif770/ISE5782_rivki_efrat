@@ -11,7 +11,15 @@ public class Tube implements Geometry{
     protected Ray axisRay;
     protected double radius;
 
-    public Tube(int i, Ray ray) {
+    /**
+     *
+     * @param r
+     * @param ray
+     */
+    public Tube(int r, Ray ray) {
+        if(r == 0) throw  new IllegalArgumentException("Invalid radius");
+        axisRay = ray;
+        radius = r;
     }
 
     /**
