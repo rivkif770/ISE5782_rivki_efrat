@@ -11,6 +11,9 @@ public class Tube implements Geometry{
     protected Ray axisRay;
     protected double radius;
 
+    public Tube(int i, Ray ray) {
+    }
+
     /**
      *
      * @return
