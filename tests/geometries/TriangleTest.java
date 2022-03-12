@@ -7,7 +7,9 @@ import primitives.Vector;
 import static org.junit.jupiter.api.Assertions.*;
 
 class TriangleTest {
-
+    /**
+     * Test method for {@link geometries.Triangle#getNormal(primitives.Point)}.
+     */
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============

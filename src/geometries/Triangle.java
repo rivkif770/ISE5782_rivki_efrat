@@ -18,12 +18,17 @@ public class Triangle extends Polygon{
     }
 
     /**
-     *
+     * Returns normal to point
      * @param point
-     * @return
+     * @return normal
      */
     public Vector getNormal(Point point){return super.getNormal(point);}
 
+    /**
+     * equals
+     * @param o
+     * @return boolean value
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -32,6 +37,10 @@ public class Triangle extends Polygon{
         return super.equals(o);
     }
 
+    /**
+     * toString
+     * @return string
+     */
     @Override
     public String toString() {
         return "Triangle: \n" +

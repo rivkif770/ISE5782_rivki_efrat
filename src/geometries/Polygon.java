@@ -85,11 +85,21 @@ public class Polygon implements Geometry {
 		size = vertices.length;
 	}
 
+	/**
+	 * A function that returns a normal point
+	 * @param point
+	 * @return
+	 */
 	@Override
 	public Vector getNormal(Point point) {
 		return plane.getNormal();
 	}
 
+	/**
+	 * equals
+	 * @param o
+	 * @return
+	 */
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
@@ -98,6 +108,10 @@ public class Polygon implements Geometry {
 		return size == polygon.size && vertices.equals(polygon.vertices) && plane.equals(polygon.plane);
 	}
 
+	/**
+	 * toString
+	 * @return
+	 */
 	@Override
 	public String toString() {
 		return "Polygon: " +

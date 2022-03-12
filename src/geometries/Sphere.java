@@ -9,6 +9,11 @@ public class Sphere implements Geometry{
     private Point center;
     private double radius;
 
+    /**
+     * constructor
+     * @param center - center of the sphere
+     * @param radius - radius of the sphere
+     */
     public Sphere(Point center, double radius) {
         this.center = center;
         if(radius == 0)
@@ -25,7 +30,7 @@ public class Sphere implements Geometry{
     }
 
     /**
-     * radius
+     * get radius
      * @return radius of sphere
      */
     public double getRadius() {
@@ -48,7 +53,7 @@ public class Sphere implements Geometry{
     /**
      * Comparison between spheres
      * @param o
-     * @return
+     * @return Boolean value
      */
     @Override
     public boolean equals(Object o) {
@@ -60,7 +65,7 @@ public class Sphere implements Geometry{
 
     /**
      * toString
-     * @return
+     * @return string
      */
     @Override
     public String toString() {

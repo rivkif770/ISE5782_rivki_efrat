@@ -95,7 +95,7 @@ class VectorTest {
 
         // =============== Boundary Values Tests ==================
         // TC11: test that the vectors are co-lined
-        try { // test that the vectors are co-lined
+        try {
             v.crossProduct(u);
             out.println("ERROR: the normalized vector is not parallel to the original one");
         } catch (Exception e) {

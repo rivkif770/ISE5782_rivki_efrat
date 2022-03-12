@@ -12,9 +12,9 @@ public class Tube implements Geometry{
     protected double radius;
 
     /**
-     *
-     * @param r
-     * @param ray
+     * constructor
+     * @param r radius of tube
+     * @param ray ray of tube
      */
     public Tube(int r, Ray ray) {
         if(r == 0) throw  new IllegalArgumentException("Invalid radius");
@@ -23,16 +23,16 @@ public class Tube implements Geometry{
     }
 
     /**
-     *
-     * @return
+     *get ray ot tube
+     * @return ray
      */
     public Ray getAxisRay() {
         return axisRay;
     }
 
     /**
-     *
-     * @return
+     *get radius ot tube
+     * @return radius
      */
     public double getRadius() {
         return radius;
@@ -60,7 +60,7 @@ public class Tube implements Geometry{
 
     /**
      * toString
-     * @return
+     * @return string
      */
     @Override
     public String toString() {
