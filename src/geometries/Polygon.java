@@ -119,4 +119,9 @@ public class Polygon implements Geometry {
 				"\nplane: " + plane +
 				"\nsize: " + size;
 	}
+
+	@Override
+	public List<Point> findIntsersections(Ray ray) {
+		return null;
+	}
 }

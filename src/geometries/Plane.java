@@ -2,8 +2,10 @@ package geometries;
 
 import primitives.Double3;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
 import java.util.Objects;
 
 public class Plane implements Geometry {
@@ -91,4 +93,8 @@ public class Plane implements Geometry {
         return "Plane:\n"+"p0: " +p0.toString() +"\nnormal: " + normal.toString();
     }
 
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
+        return null;
+    }
 }
