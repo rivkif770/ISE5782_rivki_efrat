@@ -29,6 +29,21 @@ public class Point {
         return xyz;
     }
     /**
+     * getX of point
+     * @return
+     */
+    public double getX() {return xyz.d1; }
+    /**
+     * getY of point
+     * @return
+     */
+    public double getY() {return xyz.d2; }
+    /**
+     * getZ of point
+     * @return
+     */
+    public double getZ() {return xyz.d3; }
+    /**
      *Connecting vector and dot
      * @param vector to adding
      * @return point
@@ -81,4 +96,5 @@ public class Point {
     public String toString() {
         return xyz.toString();
     }
+
 }
