@@ -1,12 +1,11 @@
 package geometries;
 
-import primitives.Double3;
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.List;
 import java.util.Objects;
+
+import static primitives.Util.*;
 
 public class Plane implements Geometry {
     public Point p0;
@@ -93,8 +92,42 @@ public class Plane implements Geometry {
         return "Plane:\n"+"p0: " +p0.toString() +"\nnormal: " + normal.toString();
     }
 
+
+    /**
+     * find intersections point with the plane
+     * @param ray ray that cross the plane
+     * @return list of intersection points that were found => p0 + tv
+     */
     @Override
     public List<Point> findIntersections(Ray ray) {
+        Point p0 = ray.getP0();
+        Vector v = ray.getDir();
+
+        if(p0.equals(p0)){
+            return null;
+        }
+
+        Vector n = normal;
+
+        // t = n∙(q0 - p0) / n∙v
+        // if t > 0 point as found
+
+        Vector p0_q0 = p0.subtract(p0);
+        double mone = alignZero(n.dotProduct(p0_q0));
+        if (isZero(mone)){ // the starting point of the ray is inside the plane
+            return null;
+        }
+
+        double nv = alignZero(n.dotProduct(v));
+        if(isZero(nv)){ // the ray is vertical on the plane
+            return null;
+        }
+
+        double t = alignZero(mone / nv);
+
+        if(t > 0){
+            return List.of(new Point(ray.getPoint(t).getXyz()));
+        }
         return null;
     }
 }
