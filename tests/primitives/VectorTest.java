@@ -81,7 +81,7 @@ class VectorTest {
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Checking the correctness of the vector length
-        assertTrue(!isZero(new Vector(0, 3, 4).length() - 5), "ERROR: length() wrong value");
+        assertTrue(isZero(new Vector(0, 3, 4).length() - 5), "ERROR: length() wrong value");
 
     }
 
@@ -91,16 +91,13 @@ class VectorTest {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Checking the correctness of the vector length
         Vector u = v.normalize();
-        assertTrue(!isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");
+        assertTrue(isZero(u.length() - 1), "ERROR: the normalized vector is not a unit vector");
 
         // =============== Boundary Values Tests ==================
-        // TC11: test that the vectors are co-lined
-        try {
-            v.crossProduct(u);
-            out.println("ERROR: the normalized vector is not parallel to the original one");
-        } catch (Exception e) {
-        }
-        if (v.dotProduct(u) < 0)
-            out.println("ERROR: the normalized vector is opposite to the original one");
+        // TC11: normalized vector is not parallel to the original one
+        assertThrows(IllegalArgumentException.class, ()-> v.crossProduct(u), "ERROR: the normalized vector is not parallel to the original one");
+        // TC02: normalized vector is opposite to the original one
+        assertTrue(v.dotProduct(u) > 0, "ERROR: the normalized vector is opposite to the original one");
+
     }
 }
