@@ -105,7 +105,7 @@ public class Sphere implements Geometry{
 
         Vector u = center.subtract(p0);
         double tm = u.dotProduct(v);
-        double d = alignZero(Math.sqrt(u.lengthSquared() - (tm * tm) ));
+        double d = alignZero(Math.sqrt(u.lengthSquared() - (tm * tm)));
 
         if(d >= radius){
             return null; // there is no intersections points

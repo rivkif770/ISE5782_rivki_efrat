@@ -29,7 +29,7 @@ public class Vector extends Point {
      * @return vector
      */
     public Vector add(Vector vector) {
-        return new Vector(this.add(vector).xyz);
+        return new Vector(xyz.add(vector.xyz));
     }
     /**
      * subtract

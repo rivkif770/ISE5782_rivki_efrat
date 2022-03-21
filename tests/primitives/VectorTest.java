@@ -15,7 +15,8 @@ class VectorTest {
 
         // =============== Boundary Values Tests ==================
         // TC01: Test that Checking the connection of zero vector vectors
-        assertTrue(!(v1.add(new Vector(-1, -2, -3)).equals(new Point(0, 0, 0))), "ERROR: Vector + Vector does not work correctly");
+        assertTrue(v1.add(new Vector(-1, -2, -4)).equals(new Point(0, 0, -1)), "ERROR: Vector + Vector does not work correctly");
+        //assertTrue(new Vector(0, 0, -1).equals(new Point(-1, -2, -4).add(v1)), "ERROR: Vector + Vector does not work correctly");
 
     }
 
@@ -25,7 +26,7 @@ class VectorTest {
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Proper vector subtraction test
-        assertTrue(!(new Vector(1, 1, 1).equals(new Point(2, 3, 4).subtract(v1))), "ERROR: Vector - Vector does not work correctly");
+        assertTrue(new Vector(1, 1, 1).equals(new Point(2, 3, 4).subtract(v1)), "ERROR: Vector - Vector does not work correctly");
 
     }
 
@@ -37,11 +38,11 @@ class VectorTest {
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Normal vector scalar multiplication test
-        assertTrue(!isZero(v1.dotProduct(v2) + 28), "ERROR: dotProduct() wrong value");
+        assertTrue(isZero(v1.dotProduct(v2) + 28), "ERROR: dotProduct() wrong value");
 
         // =============== Boundary Values Tests ==================
         // TC01: Scalar product examination of orthogonal vectors is zero
-        assertTrue(!isZero(v1.dotProduct(v3)), "ERROR: dotProduct() for orthogonal vectors is not zero");
+        assertTrue(isZero(v1.dotProduct(v3)), "ERROR: dotProduct() for orthogonal vectors is not zero");
 
     }
 
@@ -72,7 +73,7 @@ class VectorTest {
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Checking the correctness of the vector length Squared
-        assertTrue(!isZero(v1.lengthSquared() - 14), "ERROR: lengthSquared() wrong value");
+        assertTrue(isZero(v1.lengthSquared() - 14), "ERROR: lengthSquared() wrong value");
     }
 
     @Test
