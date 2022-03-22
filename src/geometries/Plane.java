@@ -3,12 +3,11 @@ package geometries;
 import primitives.*;
 
 import java.util.List;
-import java.util.Objects;
 
 import static primitives.Util.*;
 
 public class Plane implements Geometry {
-    public Point p0;
+    public Point q0;
     public Vector normal;
 
     /**
@@ -18,7 +17,7 @@ public class Plane implements Geometry {
      * Normalize the vector in a state that is not normalized
      */
     public Plane(Point p0, Vector normal) {
-        this.p0 = p0;
+        this.q0 = p0;
         if(normal.length() == 1)
             this.normal = normal;
         else
@@ -32,7 +31,7 @@ public class Plane implements Geometry {
      * @param p3 -point3
      */
     public Plane(Point p1,Point p2,Point p3){
-        p0 = p1;
+        q0 = p1;
         if(p1.equals(p2) || p1.equals(p3) || p2.equals(p3))
             throw new IllegalArgumentException("Two of the points are identical");
 
@@ -49,8 +48,8 @@ public class Plane implements Geometry {
      * geter point p0
      * @return p0-A point in the plane
      */
-    public Point getP0() {
-        return p0;
+    public Point getQ0() {
+        return q0;
     }
 
     /**
@@ -80,7 +79,7 @@ public class Plane implements Geometry {
         if (this == o) return true;
         if (!(o instanceof Plane)) return false;
         Plane plane = (Plane) o;
-        return p0.equals(plane.p0) && normal.equals(plane.normal);
+        return q0.equals(plane.q0) && normal.equals(plane.normal);
     }
 
     /**
@@ -89,7 +88,7 @@ public class Plane implements Geometry {
      */
     @Override
     public String toString() {
-        return "Plane:\n"+"p0: " +p0.toString() +"\nnormal: " + normal.toString();
+        return "Plane:\n"+"p0: " + q0.toString() +"\nnormal: " + normal.toString();
     }
 
 
@@ -103,7 +102,7 @@ public class Plane implements Geometry {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
-        if(p0.equals(p0)){
+        if(q0.equals(p0)){
             return null;
         }
 
@@ -112,7 +111,7 @@ public class Plane implements Geometry {
         // t = n∙(q0 - p0) / n∙v
         // if t > 0 point as found
 
-        Vector p0_q0 = p0.subtract(p0);
+        Vector p0_q0 = q0.subtract(p0);
         double mone = alignZero(n.dotProduct(p0_q0));
         if (isZero(mone)){ // the starting point of the ray is inside the plane
             return null;
@@ -130,4 +129,34 @@ public class Plane implements Geometry {
         }
         return null;
     }
+//        Point _p0 = ray.getP0();
+//        Vector v = ray.getDir();
+//
+//        if(p0.equals(p0)){
+//            return null;
+//        }
+//
+//        Vector n = normal;
+//
+//        // t = n∙(q0 - p0) / n∙v
+//        // if t > 0 point as found
+//
+//        Vector p0_q0 = p0.subtract(p0);
+//        double mone = alignZero(n.dotProduct(p0_q0));
+//        if (isZero(mone)){ // the starting point of the ray is inside the plane
+//            return null;
+//        }
+//
+//        double nv = alignZero(n.dotProduct(v));
+//        if(isZero(nv)){ // the ray is vertical on the plane
+//            return null;
+//        }
+//
+//        double t = alignZero(mone / nv);
+//
+//        if(t > 0){
+//            return List.of(new Point(ray.getPoint(t).getXyz()));
+//        }
+//        return null;
+//    }
 }

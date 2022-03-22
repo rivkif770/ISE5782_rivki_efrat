@@ -57,7 +57,7 @@ public class Point {
      * @return Vector
      */
     public Vector subtract(Point point) {
-         return new Vector(this.xyz.subtract(point.xyz));
+         return new Vector(xyz.subtract(point.xyz));
     }
     /**
      *Distance squared

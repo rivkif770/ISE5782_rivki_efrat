@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 public class Sphere implements Geometry{
     private Point center;
@@ -104,7 +105,7 @@ public class Sphere implements Geometry{
         }
 
         Vector u = center.subtract(p0);
-        double tm = u.dotProduct(v);
+        double tm = alignZero(u.dotProduct(v));
         double d = alignZero(Math.sqrt(u.lengthSquared() - (tm * tm)));
 
         if(d >= radius){
@@ -132,5 +133,5 @@ public class Sphere implements Geometry{
         }
 
         return null; // 0 points
-    }
+       }
 }

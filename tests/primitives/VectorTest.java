@@ -15,9 +15,7 @@ class VectorTest {
 
         // =============== Boundary Values Tests ==================
         // TC01: Test that Checking the connection of zero vector vectors
-        assertTrue(v1.add(new Vector(-1, -2, -4)).equals(new Point(0, 0, -1)), "ERROR: Vector + Vector does not work correctly");
-        //assertTrue(new Vector(0, 0, -1).equals(new Point(-1, -2, -4).add(v1)), "ERROR: Vector + Vector does not work correctly");
-
+        assertEquals(new Vector(-1, -2, -3), v1.add(new Vector(-2, -4, -6)), "ERROR: Vector + Vector does not work correctly");
     }
 
     @Test

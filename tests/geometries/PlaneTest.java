@@ -53,7 +53,7 @@ class PlaneTest {
      */
     @Test
     public void testFindIntersections() {
-        Plane plane = new Plane(new Point (1, 0, 0), new Point (1, 0, 0), new Point (1, 0, 0));
+        Plane plane = new Plane(new Point (0, 0, 1), new Point (0, 2, 0), new Point (1, 0, 0));
 
         // ============ Equivalence Partitions Tests ==============
         // The Ray's here ar not orthogonal and not parallels to the plane

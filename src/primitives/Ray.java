@@ -13,10 +13,8 @@ public class Ray {
      * Normalize the vector in a state that is not normalized
      */
     public Ray(Point p0, Vector dir) {
-        if(dir.length() != 1)
-            dir.normalize();
         this.p0 = p0;
-        this.dir = dir;
+        this.dir = dir.normalize();
 
     }
     public Point getPoint(double t){
