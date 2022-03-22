@@ -32,15 +32,12 @@ class GeometriesTest {
         //TC02 ray intersect all the geometries
         ray = new Ray(new Point(0,-10,5), new Vector(0,10,-4));
         assertEquals(4, geo.findIntersections(ray).size());
-
         //TC03 ray intersect only one of the geometries
         ray = new Ray(new Point(0,-10,5), new Vector(0,10,-1));
         assertEquals(1, geo.findIntersections(ray).size());
-
         //TC04 ray not intersect the geometries
         ray = new Ray(new Point(6,2,2), new Vector(0,3,1));
         assertNull(geo.findIntersections(ray));
-
         //TC04 Empty body collection
         ray = new Ray(new Point(6,2,2), new Vector(0,3,1));
         assertNull(new Geometries().findIntersections(ray));
