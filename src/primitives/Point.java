@@ -4,7 +4,10 @@ import java.util.Objects;
 import primitives.Double3;
 public class Point {
     protected Double3 xyz;
-
+    /**
+     * a zero constants of point (0, 0, 0)
+     */
+    public final static Point ZERO = new Point(0d, 0d, 0d);
     /**
      * constructor
      * @param x value of x

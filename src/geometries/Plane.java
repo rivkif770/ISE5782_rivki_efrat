@@ -18,10 +18,7 @@ public class Plane implements Geometry {
      */
     public Plane(Point p0, Vector normal) {
         this.q0 = p0;
-        if(normal.length() == 1)
-            this.normal = normal;
-        else
-            normal.normalize();
+        this.normal = normal.normalize();
     }
 
     /**
@@ -69,28 +66,6 @@ public class Plane implements Geometry {
     public Vector getNormal(Point point) {
         return normal;
     }
-    @Override
-    /**
-     * equals-Compares two plan
-     * @param o-The object for comparison
-     * @return Boolean value Whether the objects are equal or not
-     */
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Plane)) return false;
-        Plane plane = (Plane) o;
-        return q0.equals(plane.q0) && normal.equals(plane.normal);
-    }
-
-    /**
-     *toString
-     * @return Threading the values
-     */
-    @Override
-    public String toString() {
-        return "Plane:\n"+"p0: " + q0.toString() +"\nnormal: " + normal.toString();
-    }
-
 
     /**
      * find intersections point with the plane
@@ -129,34 +104,25 @@ public class Plane implements Geometry {
         }
         return null;
     }
-//        Point _p0 = ray.getP0();
-//        Vector v = ray.getDir();
-//
-//        if(p0.equals(p0)){
-//            return null;
-//        }
-//
-//        Vector n = normal;
-//
-//        // t = n∙(q0 - p0) / n∙v
-//        // if t > 0 point as found
-//
-//        Vector p0_q0 = p0.subtract(p0);
-//        double mone = alignZero(n.dotProduct(p0_q0));
-//        if (isZero(mone)){ // the starting point of the ray is inside the plane
-//            return null;
-//        }
-//
-//        double nv = alignZero(n.dotProduct(v));
-//        if(isZero(nv)){ // the ray is vertical on the plane
-//            return null;
-//        }
-//
-//        double t = alignZero(mone / nv);
-//
-//        if(t > 0){
-//            return List.of(new Point(ray.getPoint(t).getXyz()));
-//        }
-//        return null;
-//    }
+    @Override
+    /**
+     * equals-Compares two plan
+     * @param o-The object for comparison
+     * @return Boolean value Whether the objects are equal or not
+     */
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Plane)) return false;
+        Plane plane = (Plane) o;
+        return q0.equals(plane.q0) && normal.equals(plane.normal);
+    }
+
+    /**
+     *toString
+     * @return Threading the values
+     */
+    @Override
+    public String toString() {
+        return "Plane:\n"+"p0: " + q0.toString() +"\nnormal: " + normal.toString();
+    }
 }
