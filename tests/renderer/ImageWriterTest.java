@@ -7,7 +7,9 @@ import primitives.Color;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ImageWriterTest {
-
+    /**
+     *
+     */
     @Test
     void writeToImage() {
         ImageWriter imageWriter = new ImageWriter("testYellow",800,500);
