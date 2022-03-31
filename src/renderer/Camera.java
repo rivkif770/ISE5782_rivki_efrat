@@ -123,39 +123,6 @@ public class Camera {
         return this;
     }
     /**
-     * set the view plane size
-     * @param width the width of the view plane
-     * @param height the height of the view plane
-     * @return this camera (like builder pattern)
-     * @throws IllegalArgumentException if width or height equal to 0
-     */
-    public Camera setViewPlaneSize(double width, double height){
-        if(isZero(width) || isZero(height)){
-            throw new IllegalArgumentException("width or height cannot be zero");
-        }
-
-        _width = width;
-        _height = height;
-        return this;
-    }
-    /**
-     * set the distance from the camera to the view plane
-     * @param distance the distance
-     * @return this camera (like builder pattern)
-     * @throws IllegalArgumentException if distance = 0
-     */
-    public Camera setDistance(double distance){
-        if(isZero(distance)){
-            throw new IllegalArgumentException("distance cannot be zero");
-        }
-
-        _distance = distance;
-        // every time that we chang the distance from the view plane
-        // we will calculate the center point of the view plane aging
-        _centerPoint = _p0.add(_vTo.scale(_distance));
-        return this;
-    }
-    /**
      * construct ray through a pixel in the view plane
      * nX and nY create the resolution
      * @param nX number of pixels in the width of the view plane

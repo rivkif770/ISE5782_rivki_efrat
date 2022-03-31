@@ -15,14 +15,14 @@ public class AmbientLight {
      * @param Ka Ka is the presentation of the reduce factor of the light in the pong model
      */
     public AmbientLight(Color Ia, Double3 Ka) {
-        Ia.scale(Ka);
+        _intensity = Ia.scale(Ka);
     }
 
     /**
      * Default constructor for AmbientLight
      */
     public AmbientLight(){
-        _intensity=Color.BLACK;
+        _intensity = Color.BLACK;
     }
     /**
      * getter for the intensity
