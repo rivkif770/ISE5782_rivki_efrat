@@ -1,6 +1,10 @@
 package renderer;
 
 import primitives.*;
+import scene.Scene;
+
+import java.util.MissingResourceException;
+
 import static primitives.Util.*;
 
 public class Camera {
@@ -13,7 +17,51 @@ public class Camera {
     private double _width;
     private double _height;
     private Point _centerPoint;
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracerBase;
 
+    private void renderImage() {
+        if(_p0==null || _vRight==null ||_vUp==null ||_vTo==null ||_distance==0 ||_width==0 ||_height==0 ||_centerPoint==null ||imageWriter==null ||rayTracerBase==null )
+        {
+            throw new MissingResourceException("Missing camera data",);
+        }
+    }
+    private void printGrid(int interval, Color color){
+        if(this.imageWriter==null)
+            throw new MissingResourceException(java.lang.String,"imageWriter is null");
+        for (int i = 0; i < imageWriter.getNx(); i++) {
+            for (int j = 0; j < imageWriter.getNy(); j++) {
+                // _width/interval
+                if (i % interval == 0) {
+                    imageWriter.writePixel(i, j, Color.RED);
+                }
+                // _height/interval
+                else if (j % interval == 0) {
+                    imageWriter.writePixel(i, j, Color.RED);
+            }
+        }
+        imageWriter.writeToImage();
+    }
+
+
+    /**
+     * set the imageWriter  for the Camera
+     *
+     * @return the Camera object
+     */
+    public Camera setImageWriter(ImageWriter imageWriter) {
+        this.imageWriter = imageWriter;
+        return this;
+    }
+    /**
+     * set the rayTracerBase  for the Camera
+     *
+     * @return the Camera object
+     */
+    public Camera setRayTracerBase(RayTracerBase rayTracerBase) {
+        this.rayTracerBase = rayTracerBase;
+        return this;
+    }
     /**
      * get of p0
      * @return point
