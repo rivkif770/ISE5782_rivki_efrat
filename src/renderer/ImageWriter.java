@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import primitives.Color;
+
 import javax.imageio.*;
 
 /**
@@ -30,8 +31,10 @@ public class ImageWriter {
     private Logger logger = Logger.getLogger("ImageWriter");
 
     // ***************** Constructors ********************** //
+
     /**
      * Image Writer constructor accepting image name and View Plane parameters,
+     *
      * @param imageName the name of jpeg file
      * @param nX        amount of pixels by Width
      * @param nY        amount of pixels by height
@@ -45,6 +48,7 @@ public class ImageWriter {
     }
 
     // ***************** Getters/Setters ********************** //
+
     /**
      * View Plane Y axis resolution
      *
@@ -91,4 +95,14 @@ public class ImageWriter {
         image.setRGB(xIndex, yIndex, color.getColor().getRGB());
     }
 
+    public void printGrid(int interval, Color color) {
+        for (int i = 0; i < nX; i++) {
+            for (int j = 0; j < nY; j++) {
+                // _width/interval // _height/interval
+                if (i % interval == 0 || j % interval == 0) {
+                    writePixel(i, j, Color.RED);
+                }
+            }
+        }
+    }
 }

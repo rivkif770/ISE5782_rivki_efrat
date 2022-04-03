@@ -80,7 +80,7 @@ class CameraRayIntersectionsIntegrationTest {
      * @param expected tha expected number of intersections with the geometry
      */
     private void assertCountIntersections(Camera cam, Intersectable geo, int expected) {
-        cam.setViewPlaneSize(3,3).setDistance(1);
+        cam.setVPSize(3,3).setVPDistance(1);
 
         int nX = 3, nY = 3, count = 0;
 
