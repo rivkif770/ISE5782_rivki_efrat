@@ -30,8 +30,6 @@ public class ImageWriter {
 
     private Logger logger = Logger.getLogger("ImageWriter");
 
-    // ***************** Constructors ********************** //
-
     /**
      * Image Writer constructor accepting image name and View Plane parameters,
      *
@@ -47,7 +45,7 @@ public class ImageWriter {
         image = new BufferedImage(nX, nY, BufferedImage.TYPE_INT_RGB);
     }
 
-    // ***************** Getters/Setters ********************** //
+    //region Getters/Setters
 
     /**
      * View Plane Y axis resolution
@@ -66,8 +64,7 @@ public class ImageWriter {
     public int getNx() {
         return nX;
     }
-
-    // ***************** Operations ******************** //
+//endregion
 
     /**
      * Function writeToImage produces unoptimized png file of the image according to
@@ -95,6 +92,11 @@ public class ImageWriter {
         image.setRGB(xIndex, yIndex, color.getColor().getRGB());
     }
 
+    /**
+     *Grid printing
+     * @param interval The space between pixels
+     * @param color color of grid
+     */
     public void printGrid(int interval, Color color) {
         for (int i = 0; i < nX; i++) {
             for (int j = 0; j < nY; j++) {

@@ -20,40 +20,26 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
 
-    public void renderImage() {
-        if (p0 == null || vRight == null
-                || vUp == null || vTo == null || distance == 0
-                || width == 0 || height == 0 || centerPoint == null
-                || imageWriter == null || rayTracer == null) {
-            throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
-        }
-        for (int i = 0; i < imageWriter.getNy(); i++) {
-            for (int j = 0; j < imageWriter.getNx(); j++) {
-                // Pixel coloring by ray
-                Ray ray = constructRayThroughPixel(imageWriter.getNy(), imageWriter.getNx(), j, i);
-                imageWriter.writePixel(i,j, rayTracer.TraceRay(ray));
-
-            }
-        }
-    }
-
-    public void printGrid(int interval, Color color) {
-        if (this.imageWriter == null)
-            throw new MissingResourceException("imageWriter is null", ImageWriter.class.getName(), null);
-        imageWriter.printGrid(interval,color);
-    }
-
-
     /**
-     * set the imageWriter  for the Camera
+     * constructor for camera
      *
-     * @return the Camera object
+     * @param p0  the location of the camera
+     * @param vTo the direction to the view plane
+     * @param vUp the direction up
+     * @throws IllegalArgumentException if vTo and vUp is not orthogonal
      */
-    public Camera setImageWriter(ImageWriter imageWriter) {
-        this.imageWriter = imageWriter;
-        return this;
+    public Camera(Point p0, Vector vTo, Vector vUp) {
+        if (!isZero(vUp.dotProduct(vTo))) {
+            throw new IllegalArgumentException("The vectors 'up' and and 'to' is not orthogonal");
+        }
+
+        this.p0 = p0;
+        this.vUp = vUp.normalize();
+        this.vTo = vTo.normalize();
+        vRight = this.vTo.crossProduct(this.vUp).normalize();
     }
-    //region Getters
+
+    //region Getters/Setters
     /**
      * get of p0
      *
@@ -125,25 +111,6 @@ public class Camera {
     public Point get_centerVPPoint() {
         return centerPoint;
     }
-//endregion
-    /**
-     * constructor for camera
-     *
-     * @param p0  the location of the camera
-     * @param vTo the direction to the view plane
-     * @param vUp the direction up
-     * @throws IllegalArgumentException if vTo and vUp is not orthogonal
-     */
-    public Camera(Point p0, Vector vTo, Vector vUp) {
-        if (!isZero(vUp.dotProduct(vTo))) {
-            throw new IllegalArgumentException("The vectors 'up' and and 'to' is not orthogonal");
-        }
-
-        this.p0 = p0;
-        this.vUp = vUp.normalize();
-        this.vTo = vTo.normalize();
-        vRight = this.vTo.crossProduct(this.vUp).normalize();
-    }
 
     /**
      * set the view plane size
@@ -181,6 +148,58 @@ public class Camera {
         centerPoint = p0.add(vTo.scale(this.distance));
         return this;
     }
+    /**
+     * set the rayTracer ray from the camera to the view plane
+     *
+     * @param rayTracer the rayTracer
+     * @return this camera (like builder pattern)
+     */
+    public Camera setRayTracer(RayTracerBase rayTracer) {
+        this.rayTracer = rayTracer;
+        return  this;
+    }
+
+    /**
+     * set the imageWriter  for the Camera
+     *
+     * @return the Camera object
+     */
+    public Camera setImageWriter(ImageWriter imageWriter) {
+        this.imageWriter = imageWriter;
+        return this;
+    }
+//endregion
+
+    /**
+     * Checks that all fields are full and creates an image
+     */
+    public void renderImage() {
+        if (p0 == null || vRight == null
+                || vUp == null || vTo == null || distance == 0
+                || width == 0 || height == 0 || centerPoint == null
+                || imageWriter == null || rayTracer == null) {
+            throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
+        }
+        for (int i = 0; i < imageWriter.getNy(); i++) {
+            for (int j = 0; j < imageWriter.getNx(); j++) {
+                // Pixel coloring by ray
+                Ray ray = constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNy(), j, i);
+                imageWriter.writePixel(j,i, rayTracer.TraceRay(ray));
+
+            }
+        }
+    }
+
+    /**
+     *Grid printing
+     * @param interval The space between pixels
+     * @param color color of grid
+     */
+    public void printGrid(int interval, Color color) {
+        if (this.imageWriter == null)
+            throw new MissingResourceException("imageWriter is null", ImageWriter.class.getName(), null);
+        imageWriter.printGrid(interval,color);
+    }
 
     /**
      * construct ray through a pixel in the view plane
@@ -192,7 +211,7 @@ public class Camera {
      * @param i  index column in the view plane
      * @return ray that goes through the pixel (j, i)  Ray(p0, Vi,j)
      */
-    public Ray constructRayThroughPixel(double nX, double nY, int j, int i) {
+    public Ray constructRayThroughPixel(int nX, int nY, int j, int i) {
         Point pIJ = getCenterOfPixel(nX, nY, j, i); // center point of the pixel
 
         //Vi,j = Pi,j - P0, the direction of the ray to the pixel(j, i)
@@ -209,7 +228,7 @@ public class Camera {
      * @param i  index column in the view plane
      * @return the center point of the pixel
      */
-    private Point getCenterOfPixel(double nX, double nY, int j, int i) {
+    private Point getCenterOfPixel(int nX, int nY, int j, int i) {
         // calculate the ratio of the pixel by the height and by the width of the view plane
         // the ratio Ry = h/Ny, the height of the pixel
         double rY = alignZero(height / nY);
@@ -232,12 +251,11 @@ public class Camera {
         return pIJ;
     }
 
-    public Camera setRayTracer(RayTracerBase rayTracer) {
-        this.rayTracer = rayTracer;
-        return  this;
-    }
-
+    /**
+     * Invites the coloring function
+     */
     public void writeToImage() {
         imageWriter.writeToImage();
     }
+
 }

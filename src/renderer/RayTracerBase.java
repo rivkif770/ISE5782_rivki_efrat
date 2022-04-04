@@ -14,10 +14,10 @@ public abstract class RayTracerBase {
 
     /**
      * ctor - initializing the scene parameter
-     * @param scene
+     * @param scene1
      */
-    public RayTracerBase(Scene scene) {
-        scene = scene;
+    public RayTracerBase(Scene scene1) {
+        scene = scene1;
     }
 
     /**
