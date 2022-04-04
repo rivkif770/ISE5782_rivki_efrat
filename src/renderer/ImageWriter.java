@@ -100,7 +100,7 @@ public class ImageWriter {
             for (int j = 0; j < nY; j++) {
                 // _width/interval // _height/interval
                 if (i % interval == 0 || j % interval == 0) {
-                    writePixel(i, j, Color.RED);
+                    writePixel(i, j, color);
                 }
             }
         }

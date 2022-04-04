@@ -19,12 +19,17 @@ public class RayTracerBasic extends RayTracerBase {
      * ctor - initializing the scene parameter
      * uses super ctor
      *
-     * @param _scene
+     * @param scene
      */
     public RayTracerBasic(Scene scene) {
         super(scene);
     }
 
+    /**
+     * return the color of closestPoint
+     * @param ray - the traced ray
+     * @return Color
+     */
     @Override
     public Color TraceRay(Ray ray) {
         List<Point> pointList = scene.geometries.findIntersections(ray);
@@ -32,6 +37,11 @@ public class RayTracerBasic extends RayTracerBase {
         return calcColor(closestPoint);
     }
 
+    /**
+     * return the color of point
+     * @param point
+     * @return Color
+     */
     private Color calcColor(Point point){
         if(point == null){
             return scene.background;

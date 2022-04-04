@@ -79,7 +79,6 @@ public class Ray {
                 minDistance = temp;
             }
         }
-
         return closesPoint;
     }
 
