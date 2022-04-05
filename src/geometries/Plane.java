@@ -6,7 +6,7 @@ import java.util.List;
 
 import static primitives.Util.*;
 
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     public Point q0;
     public Vector normal;
 
@@ -57,12 +57,12 @@ public class Plane implements Geometry {
         return normal;
     }
 
-    @Override
     /**
      *geret vector normal
      * @return normal-Normal to the plane
      * @param point in the plan
      */
+    @Override
     public Vector getNormal(Point point) {
         return normal;
     }

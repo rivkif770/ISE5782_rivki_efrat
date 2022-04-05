@@ -9,7 +9,7 @@ import java.util.List;
 import static primitives.Util.*;
 
 
-public class Tube implements Geometry{
+public class Tube extends Geometry{
     protected Ray axisRay;
     protected double radius;
 
@@ -45,6 +45,7 @@ public class Tube implements Geometry{
      * @param p point
      * @return normal
      */
+    @Override
     public Vector getNormal(Point p) {
 
         Point p0 = axisRay.getP0();

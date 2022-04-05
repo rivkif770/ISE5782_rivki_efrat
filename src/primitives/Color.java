@@ -1,6 +1,5 @@
 package primitives;
 
-
 /**
  * Wrapper class for java.jwt.Color The constructors operate with any
  * non-negative RGB values. The colors are maintained without upper limit of
@@ -10,6 +9,7 @@ package primitives;
  * @author Dan Zilberstein
  */
 public class Color {
+
     /**
      * Black color = (0,0,0)
      */
@@ -85,16 +85,28 @@ public class Color {
      * @param colors one or more other colors to add
      * @return new Color object which is a result of the operation
      */
-    public Color add(Color... colors) {
+    public primitives.Color add(primitives.Color... colors) {
         double rr = rgb.d1;
         double rg = rgb.d2;
         double rb = rgb.d3;
-        for (Color c : colors) {
+        for (primitives.Color c : colors) {
             rr += c.rgb.d1;
             rg += c.rgb.d2;
             rb += c.rgb.d3;
         }
-        return new Color(rr, rg, rb);
+        return new primitives.Color(rr, rg, rb);
+    }
+
+    /**
+     * Scale the color by a scalar triad per rgb
+     *
+     * @param k scale factor per rgb
+     * @return new Color object which is the result of the operation
+     */
+    public primitives.Color scale(Double3 k) {
+        if (k.d1 < 0.0 || k.d2 < 0.0 || k.d3 < 0.0)
+            throw new IllegalArgumentException("Can't scale a color by a negative number");
+        return new primitives.Color(rgb.product(k));
     }
 
     /**
@@ -103,10 +115,10 @@ public class Color {
      * @param k scale factor
      * @return new Color object which is the result of the operation
      */
-    public Color scale(Double3 k) {
-        if (k.d1 < 0.0 || k.d2 < 0.0 || k.d3 < 0.0)
+    public primitives.Color scale(double k) {
+        if (k < 0.0)
             throw new IllegalArgumentException("Can't scale a color by a negative number");
-        return new Color(rgb.product(k));
+        return new primitives.Color(rgb.scale(k));
     }
 
     /**
@@ -115,10 +127,22 @@ public class Color {
      * @param k reduction factor
      * @return new Color object which is the result of the operation
      */
-    public Color reduce(Double3 k) {
+    public primitives.Color reduce(double k) {
+        if (k < 1)
+            throw new IllegalArgumentException("Can't scale a color by a by a number lower than 1");
+        return new primitives.Color(rgb.reduce(k));
+    }
+
+    /**
+     * Scale the color by (1 / reduction factor)
+     *
+     * @param k reduction factor
+     * @return new Color object which is the result of the operation
+     */
+    public primitives.Color reduce(Double3 k) {
         if (k.d1 < 1.0 || k.d2 < 1.0 || k.d3 < 1.0)
             throw new IllegalArgumentException("Can't scale a color by a by a number lower than 1");
-        return new Color(rgb.d1 / k.d1, rgb.d2 / k.d2, rgb.d3 / k.d3);
+        return new primitives.Color(rgb.d1 / k.d1, rgb.d2 / k.d2, rgb.d3 / k.d3);
     }
 
 }

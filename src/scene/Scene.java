@@ -8,12 +8,9 @@ package scene;
  *
  * @authors Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
  */
-import elements.AmbientLight;
+import lighting.AmbientLight;
 import geometries.Geometries;
-import geometries.Intersectable;
 import primitives.Color;
-import java.util.*;
-import elements.*;
 
 public class Scene {
     public String name = null;
@@ -21,8 +18,8 @@ public class Scene {
     public AmbientLight ambientLight = new AmbientLight();
     public Geometries geometries = null;
 
-    public Scene(String _name) {
-        name = _name;
+    public Scene(String name) {
+        this.name = name;
         geometries = new Geometries();
     }
 
@@ -35,8 +32,8 @@ public class Scene {
      *
      * @return the scene object
      */
-    public Scene setBackground(Color _background) {
-        this.background = _background;
+    public Scene setBackground(Color background) {
+        this.background = background;
         return this;
     }
 
@@ -45,8 +42,8 @@ public class Scene {
      *
      * @return the scene object
      */
-    public Scene setAmbientLight(AmbientLight _ambientLight) {
-        this.ambientLight = _ambientLight;
+    public Scene setAmbientLight(AmbientLight ambientLight) {
+        this.ambientLight = ambientLight;
         return this;
     }
 
@@ -55,8 +52,8 @@ public class Scene {
      *
      * @return the scene object
      */
-    public Scene setGeometries(Geometries _geometries) {
-        this.geometries = _geometries;
+    public Scene setGeometries(Geometries geometries) {
+        this.geometries = geometries;
         return this;
     }
 
