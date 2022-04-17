@@ -67,18 +67,6 @@ public class Sphere extends Geometry{
     }
 
     /**
-     * toString
-     * @return string
-     */
-    @Override
-    public String toString() {
-        return "Sphere: " +
-                "\ncenter: " + center +
-                "\nradius: " + radius;
-    }
-
-
-    /**
      * find intersections point with the sphere
      * let O be the center of the sphere, let r be the radius <br/>
      * u = O − p0 <br/>
@@ -93,7 +81,7 @@ public class Sphere extends Geometry{
      * @throws IllegalArgumentException if the starting point of the ray equals to the center of the sphere
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -102,8 +90,8 @@ public class Sphere extends Geometry{
         }
 
         Vector u = center.subtract(p0);
-        double tm = alignZero(u.dotProduct(v));
-        double d = alignZero(Math.sqrt(u.lengthSquared() - (tm * tm)));
+        double tm = u.dotProduct(v);
+        double d = alignZero(Math.sqrt(u.lengthSquared() - (tm * tm) ));
 
         if(d >= radius){
             return null; // there is no intersections points
@@ -118,17 +106,28 @@ public class Sphere extends Geometry{
             Point p1 = ray.getPoint(t1);
             Point p2 = ray.getPoint(t2);
 
-            return List.of(new Point(p1.getXyz()), new Point( p2.getXyz()));
+            return List.of(new GeoPoint(this, p1), new GeoPoint(this, p2));
         }
 
         if(t1 > 0){
-            return List.of(new Point(ray.getPoint(t1).getXyz()));
+            return List.of(new GeoPoint(this, ray.getPoint(t1)));
         }
 
         if(t2 > 0){
-            return List.of(new Point(ray.getPoint(t2).getXyz()));
+            return List.of(new GeoPoint(this, ray.getPoint(t2)));
         }
 
         return null; // 0 points
-       }
+    }
+
+    /**
+     * toString
+     * @return string
+     */
+    @Override
+    public String toString() {
+        return "Sphere: " +
+                "\ncenter: " + center +
+                "\nradius: " + radius;
+    }
 }

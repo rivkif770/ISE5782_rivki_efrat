@@ -43,11 +43,12 @@ public class Geometries extends Intersectable{
      * @param ray ray that cross the geometry
      * @return list of intersection points that were found
      */
+
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> result = null;
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        List<GeoPoint> result = null;
         for(var item : intersectables){
-            List<Point>  itemPoints = item.findIntersections(ray);
+            List<GeoPoint>  itemPoints = item.findGeoIntersectionsHelper(ray);
             if(itemPoints != null){
                 if(result == null){
                     result = new LinkedList();

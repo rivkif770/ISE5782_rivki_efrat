@@ -73,7 +73,7 @@ public class Plane extends Geometry {
      * @return list of intersection points that were found => p0 + tv
      */
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
         Point p0 = ray.getP0();
         Vector v = ray.getDir();
 
@@ -100,7 +100,7 @@ public class Plane extends Geometry {
         double t = alignZero(mone / nv);
 
         if(t > 0){
-            return List.of(new Point(ray.getPoint(t).getXyz()));
+            return List.of(new GeoPoint(this,  ray.getPoint(t)));
         }
         return null;
     }
