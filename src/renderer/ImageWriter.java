@@ -49,7 +49,6 @@ public class ImageWriter {
 
     /**
      * View Plane Y axis resolution
-     *
      * @return the amount of vertical pixels
      */
     public int getNy() {
