@@ -86,7 +86,7 @@ public class Sphere extends Geometry{
         Vector v = ray.getDir();
 
         if(p0.equals(center)){
-            throw new IllegalArgumentException("ray p0 cannot be equals to the center of the sphere");
+            return List.of(new GeoPoint(this, ray.getPoint(radius)));
         }
 
         Vector u = center.subtract(p0);
