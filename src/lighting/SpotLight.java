@@ -31,4 +31,20 @@ public class SpotLight extends PointLight{
         super(intensity, position);
         this.direction = direction.normalize();
     }
+
+    /**
+     * get the intensity of the light in relation to the distance from the point
+     * Calculate the light beam by calculating
+     * the angle between the spot direction and the point direction
+     * @param p The point where the light strikes
+     * @return the color of the point
+     */
+    @Override
+    public Color getIntensity(Point p) {
+        Vector l = getL(p); // direction to the point
+        double angle = direction.dotProduct(l); // the angle between the spot direction and the point direction
+        double factor =  angle > 0 ? angle : 0;
+
+        return super.getIntensity(p).scale(factor);
+    }
 }

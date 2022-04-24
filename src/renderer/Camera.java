@@ -2,7 +2,6 @@ package renderer;
 
 import primitives.*;
 
-
 import java.util.MissingResourceException;
 
 import static primitives.Util.*;
@@ -173,7 +172,7 @@ public class Camera {
     /**
      * Checks that all fields are full and creates an image
      */
-    public void renderImage() {
+    public Camera renderImage() {
         if (p0 == null || vRight == null
                 || vUp == null || vTo == null || distance == 0
                 || width == 0 || height == 0 || centerPoint == null
@@ -188,6 +187,7 @@ public class Camera {
 
             }
         }
+        return this;
     }
 
     /**
@@ -242,10 +242,10 @@ public class Camera {
 
         Point pIJ = centerPoint;
 
-        if (xJ != 0d) {
+        if (!isZero(xJ)) {
             pIJ = pIJ.add(vRight.scale(xJ));
         }
-        if (yI != 0d) {
+        if (!isZero(yI)) {
             pIJ = pIJ.add(vUp.scale(yI));
         }
         return pIJ;

@@ -1,22 +1,18 @@
 package scene;
-/**
- * Scene class - combines all the objects needed for the scene:
- * name
- * background
- * ambient lighting
- * the geometry model
- *
- * @authors Tehila Shpayer 325236594 and Sarah Malka Hamou 325266401
- */
-import lighting.AmbientLight;
+
+import lighting.*;
 import geometries.Geometries;
 import primitives.Color;
+
+import java.util.List;
+import java.util.LinkedList;
 
 public class Scene {
     public String name = null;
     public Color background = Color.BLACK;
     public AmbientLight ambientLight = new AmbientLight();
     public Geometries geometries = null;
+    public List<LightSource> lighting = new LinkedList<>();
 
     public Scene(String name) {
         this.name = name;
@@ -57,5 +53,13 @@ public class Scene {
         return this;
     }
 
-
+    /**
+     * set the lightSource - a list of light sources
+     *
+     * @return the scene object
+     */
+    public Scene setLighting(List<LightSource> lighting) {
+        this.lighting = lighting;
+        return this;
+    }
 }
