@@ -52,4 +52,13 @@ public class SpotLight extends PointLight{
 
         return super.getIntensity(p).scale(factor);
     }
+    /**
+     * setter for the focus
+     * @param focus the new focus
+     * @return this SpotLight
+     */
+    public PointLight setFocus(double focus) {
+        focus = focus;
+        return this;
+    }
 }
