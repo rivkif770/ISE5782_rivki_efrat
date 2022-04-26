@@ -6,6 +6,12 @@ import java.util.MissingResourceException;
 
 import static primitives.Util.*;
 
+/**
+ * this class represent camera by location <br/>
+ * and directions toward, right and up to the scene that lives in a virtual view plane. <br/>
+ * The view plane is represent by height and wight
+ * @author rivki and efrat
+ */
 public class Camera {
 
     private Point p0;

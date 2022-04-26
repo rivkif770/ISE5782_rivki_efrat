@@ -1,22 +1,27 @@
 package primitives;
 
+/**
+ * this class gives factors of material and the texture of the geometry.
+ * geometries objects can have the same material.
+ * @author rivki and efrat
+ */
 public class Material {
     public Double3 kD = new Double3(0,0,0), kS = new Double3(0,0,0);
     public int nShininess = 0;
 
     //region Getters
     /**
-     * geting of nShininess
+     * getting of nShininess
      * @return nShininess
      */
     public int getnShininess() {return nShininess;}
     /**
-     * geting of kD
+     * getting of kD
      * @return kD
      */
     public Double3 getkD() {return kD;}
     /**
-     * geting of kS
+     * getting of kS
      * @return kS
      */
     public Double3 getkS() {return kS;}

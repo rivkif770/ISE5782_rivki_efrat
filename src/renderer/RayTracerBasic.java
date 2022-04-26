@@ -12,8 +12,9 @@ import static primitives.Util.alignZero;
 import java.util.List;
 
 /**
- * the RayTracerBasic implements the class RayTracerBase and implements the traceRay method.
- *
+ * Rey tracer
+ * calculate the color ray-geometry intersection
+ * @author rivki and efrat
  */
 public class RayTracerBasic extends RayTracerBase {
 
@@ -29,9 +30,12 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * return the color of point
-     * @param geoPoint
-     * @return Color
+     * According to the pong model
+     * This model is additive in which we connect all the components that will eventually
+     * make up an image with background colors, self-colors and texture colors.
+     * @param geoPoint the geometry and the lighted point at him
+     * @param ray the ray that goes out of the camera
+     * @return the color at the point
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray ){
         if(geoPoint == null){
@@ -79,15 +83,17 @@ public class RayTracerBasic extends RayTracerBase {
     }
     /**
      * Calculation of diffusion light component
-     * @param material -
-     * @param nl -
+     * @param material - normal to point
+     * @param nl - dot product between n-normal to point and l-direction vector from light to point
      * @return Color - the calculated color of diffusion light component
      */
     private Double3 calcDiffusive(Material material,double nl) {
         return material.kD.scale(Math.abs(nl));
     }
     /**
-     * implementation of super class trace ray method
+     * Trace the ray and calculates the color of the point that interact with the geometries of the scene
+     * @param ray the ray that came out of the camera
+     * @return the color of the object that the ray is interact with
      */
     public Color TraceRay(Ray ray) {
         GeoPoint clossestGeoPoint = ray.findClosestGeoPoint(scene.geometries.findGeoIntersections(ray));

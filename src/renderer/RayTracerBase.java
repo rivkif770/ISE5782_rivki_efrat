@@ -5,26 +5,24 @@ package renderer;
         import scene.Scene;
 
 /**
- * the abstract RayTracerBase class is used to color a scene
- * with a given scene and a ray the class calculates the color of the ray
- *
+ * abstract class to rey tracing
+ * @author rivki and efrat
  */
 public abstract class RayTracerBase {
     protected Scene scene;
 
     /**
-     * ctor - initializing the scene parameter
-     * @param scene1
+     * Constructor for the RayTracerBase base
+     * @param scene the scene
      */
-    public RayTracerBase(Scene scene1) {
-        scene = scene1;
+    public RayTracerBase(Scene scene) {
+        this.scene = scene;
     }
 
     /**
-     * the abstract method traces the ray to the point it hits in the scene,
-     * it considers the different factors (ambient light, emmision light, light sources exet.)
-     * @param ray - the traced ray
-     * @return - the discovered color
+     * Trace the ray and calculates the color
+     * @param ray the ray that came out of the camera
+     * @return the color of the object that the ray is interact with
      */
     public abstract Color TraceRay(Ray ray);
 }
