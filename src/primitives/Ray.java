@@ -4,6 +4,10 @@ import geometries.Intersectable.GeoPoint;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * this class represent a ray by starting point and direction
+ * @author rivki and efrat
+ */
 public class Ray {
     private Point p0;
     private Vector dir;
@@ -18,9 +22,6 @@ public class Ray {
         this.p0 = p0;
         this.dir = dir.normalize();
 
-    }
-    public Point getPoint(double t){
-        return p0.add(dir.scale(t));
     }
 
     /**
@@ -37,6 +38,40 @@ public class Ray {
      */
     public Vector getDir() {
         return dir;
+    }
+
+    /**
+     * p = p0 + tv
+     * v is the direction of the ray, p0 is the stating point of the ray
+     * @param t scalar
+     * @return point on the ray
+     */
+    public Point getPoint(double t){
+        return p0.add(dir.scale(t));
+    }
+
+    /**
+     * find the closest point to the starting point of the ray in list of GeoPoints
+     * @param geoPoints list of GeoPoints
+     * @return the closest GeoPoint
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints){
+        if(geoPoints == null){
+            return null;
+        }
+
+        GeoPoint closesGeoPoint = null;
+        double minDistance = Double.MAX_VALUE;
+
+        for(var geoPoint : geoPoints){
+            double temp = geoPoint.point.distance(p0);
+            if(minDistance > temp){
+                closesGeoPoint = geoPoint;
+                minDistance = temp;
+            }
+        }
+
+        return closesGeoPoint;
     }
 
     /**
@@ -69,30 +104,4 @@ public class Ray {
         return points == null || points.isEmpty() ? null
                 : findClosestGeoPoint(points.stream().map(p -> new GeoPoint(null, p)).toList()).point;
     }
-
-    /**
-     * find the closest point to the starting point of the ray in list of GeoPoints
-     * @param geoPoints list of GeoPoints
-     * @return the closest GeoPoint
-     */
-    public GeoPoint findClosestGeoPoint(List<GeoPoint> geoPoints){
-        if(geoPoints == null){
-            return null;
-        }
-
-        GeoPoint closesGeoPoint = null;
-        double minDistance = Double.MAX_VALUE;
-
-        for(var geoPoint : geoPoints){
-            double temp = geoPoint.point.distance(p0);
-            if(minDistance > temp){
-                closesGeoPoint = geoPoint;
-                minDistance = temp;
-            }
-        }
-
-        return closesGeoPoint;
-    }
-
-
 }

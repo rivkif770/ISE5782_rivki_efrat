@@ -2,6 +2,11 @@ package primitives;
 import java.math.*;
 import java.util.Objects;
 import primitives.Double3;
+
+/**
+ * this is a basic point for RayTracing project in 3D
+ * @author rivki and efrat
+ */
 public class Point {
     protected Double3 xyz;
     /**
@@ -24,6 +29,7 @@ public class Point {
     public Point(Double3 double3){
         xyz=double3;
     }
+    //region Getters
     /**
      *getter of point
      * @return Double3
@@ -33,19 +39,20 @@ public class Point {
     }
     /**
      * getX of point
-     * @return
+     * @return double d1 - the value of d1
      */
     public double getX() {return xyz.d1; }
     /**
      * getY of point
-     * @return
+     * @return double d2 - the value of d2
      */
     public double getY() {return xyz.d2; }
     /**
      * getZ of point
-     * @return
+     * @return double d3 - the value of d3
      */
     public double getZ() {return xyz.d3; }
+    //endregion
     /**
      *Connecting vector and dot
      * @param vector to adding
@@ -99,5 +106,4 @@ public class Point {
     public String toString() {
         return xyz.toString();
     }
-
 }
