@@ -2,6 +2,10 @@ package lighting;
 
 import primitives.*;
 
+/**
+ * interface for light sources in some scene
+ * @author efrat and rivki
+ */
 public interface LightSource {
     /**
      * get Intensity in point

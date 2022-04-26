@@ -2,6 +2,10 @@ package lighting;
 
 import primitives.*;
 
+/**
+ * Directional Light with constant light intensity and direction
+ * @author efrat and rivki
+ */
 public class DirectionalLight extends Light implements LightSource{
     private Vector direction;
 

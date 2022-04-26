@@ -2,6 +2,11 @@ package lighting;
 
 import primitives.*;
 
+/**
+ * this class represent a spot light with direction and intensity of the light
+ * and also can make a flashlight by focusing the the light
+ * @author efrat and rivki
+ */
 public class SpotLight extends PointLight{
     private Vector direction;
 

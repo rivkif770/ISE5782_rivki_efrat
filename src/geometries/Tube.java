@@ -1,14 +1,13 @@
 package geometries;
-
-import primitives.Point;
-import primitives.Ray;
-import primitives.Vector;
-
+import primitives.*;
 import java.util.List;
-
 import static primitives.Util.*;
 
-
+/**
+ * this class represent an infinite Tube by radius and ray
+ *
+ * @author efrat and rivki
+ */
 public class Tube extends Geometry{
     protected Ray axisRay;
     protected double radius;
@@ -23,7 +22,7 @@ public class Tube extends Geometry{
         axisRay = ray;
         radius = r;
     }
-
+    //region getters
     /**
      *get ray ot tube
      * @return ray
@@ -60,7 +59,12 @@ public class Tube extends Geometry{
         Vector o_p = p.subtract(o);
         return o_p.normalize();
     }
+    //endregion
 
+    @Override
+    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+        return null;
+    }
     /**
      * toString
      * @return string
@@ -73,8 +77,4 @@ public class Tube extends Geometry{
                 '}';
     }
 
-    @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        return null;
-    }
 }

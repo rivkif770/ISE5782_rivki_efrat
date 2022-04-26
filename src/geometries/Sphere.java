@@ -5,9 +5,12 @@ import primitives.*;
 import java.util.List;
 import java.util.Objects;
 
-import static primitives.Util.alignZero;
-import static primitives.Util.isZero;
+import static primitives.Util.*;
 
+/**
+ * this class represent a sphere by center point and radius
+ * @author  efrat and rivki
+ */
 public class Sphere extends Geometry{
     private Point center;
     private double radius;
@@ -23,7 +26,7 @@ public class Sphere extends Geometry{
             throw new IllegalArgumentException("Invalid radius");
         this.radius = radius;
     }
-
+    //region getters
     /**
      * get center
      * @return center point of sphere
@@ -41,9 +44,10 @@ public class Sphere extends Geometry{
     }
 
     /**
-     * Returns normal to point
-     * @param point
-     * @return normal
+     * the normal of sphere:
+     * n = normalize(p - centerPoint)
+     * @param point the point on the sphere we want the normal from
+     * @return normal vector
      */
     @Override
     public Vector getNormal(Point point) {
@@ -52,7 +56,7 @@ public class Sphere extends Geometry{
         Vector o_p = point.subtract(center);
         return o_p.normalize();
     }
-
+    //endregion
     /**
      * Comparison between spheres
      * @param o

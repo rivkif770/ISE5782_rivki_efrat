@@ -5,7 +5,11 @@ import primitives.Ray;
 import primitives.Vector;
 
 import java.util.Objects;
-
+/**
+ * this a class represent a final Cylinder by radius, ray and height
+ *
+ * @author efrat and rivki
+ */
 public class Cylinder extends Tube {
     private double height;
 
@@ -47,7 +51,7 @@ public class Cylinder extends Tube {
 
     /**
      * equals
-     * @param o
+     * @param o the Object
      * @return boolean value
      */
     @Override

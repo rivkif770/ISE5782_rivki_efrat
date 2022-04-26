@@ -2,10 +2,13 @@ package geometries;
 
 import static primitives.Util.*;
 import primitives.*;
-import java.util.List;
+import java.util.*;
+import primitives.Vector;
 
-import java.util.Objects;
-
+/**
+ * this class represent a Triangle by 3 points
+ * @author efrat and rivki
+ */
 public class Triangle extends Polygon{
 
     /**

@@ -7,19 +7,29 @@ import primitives.Color;
 import java.util.List;
 import java.util.LinkedList;
 
+/**
+ * Graphic scene in our 3D model
+ * Scene contains geometric shapes and light sources
+ * we using the builder pattern design
+ * @author efrat and rivki
+ */
 public class Scene {
     public String name = null;
     public Color background = Color.BLACK;
     public AmbientLight ambientLight = new AmbientLight();
     public Geometries geometries = null;
     public List<LightSource> lighting = new LinkedList<>();
-
+    /**
+     * Constructor for SceneBuilder
+     * to get the Scene instance, you must call the methods
+     * @param name the name of the scene
+     */
     public Scene(String name) {
         this.name = name;
         geometries = new Geometries();
     }
 
-
+    //region Setters
     // ***************** Setters ********************** //
     // ** all setters implements the Builder Design Pattern **//
 
@@ -62,4 +72,5 @@ public class Scene {
         this.lighting = lighting;
         return this;
     }
+    //endregion
 }

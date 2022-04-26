@@ -4,6 +4,12 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * this class represent a point light like normal lamp. <br/>
+ * with point that represent the position of the lamp and <br/>
+ * the intensity of the light that depends on some variables related to the pong model
+ * @author efrat and rivki
+ */
 public class PointLight extends Light implements LightSource{
     private Point position;
     private double kC, kL, kQ;
@@ -37,7 +43,7 @@ public class PointLight extends Light implements LightSource{
         this.kL = 0;
         this.kQ = 0;
     }
-
+    //region getters
     /**
      * get the intensity of the light in relation to the distance from the point
      * @param p The point where the light strikes
@@ -66,7 +72,7 @@ public class PointLight extends Light implements LightSource{
         Vector dir = p.subtract(position);
         return dir.normalize();
     }
-
+    //endregion
     //region Setters
     /**
      * set Position of point light

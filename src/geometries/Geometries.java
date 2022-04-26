@@ -5,7 +5,13 @@ import primitives.Ray;
 
 import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * A class that represents all kinds of geometries <br/>
+ * that have in common that they implement the interface
+ * of finding points of intersection with a ray. <br/>
+ * using the composite design pattern.
+ * @author efrat and rivki
+ */
 public class Geometries extends Intersectable{
     private List<Intersectable> intersectables;
 

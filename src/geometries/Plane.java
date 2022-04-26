@@ -1,12 +1,15 @@
 package geometries;
 
 import primitives.*;
-
-import java.util.List;
-
 import static primitives.Util.*;
-
+import java.util.List;
+/**
+ * this class represent a Plane with point and vector normal that standing on the point
+ *
+ * @author efrat and rivki
+ */
 public class Plane extends Geometry {
+
     public Point q0;
     public Vector normal;
 
@@ -22,10 +25,13 @@ public class Plane extends Geometry {
     }
 
     /**
-     * constructor plan
-     * @param p1 -point1
-     * @param p2 -point2
-     * @param p3 -point3
+     * Constructor of Plane from 3 points on its surface <br/>
+     * the points are ordered from right to left
+     * we calculate the normal on the constructor to avoid repeated request of the normal
+     * @param p1 P1
+     * @param p2 P2
+     * @param p3 P3
+     * @throws IllegalArgumentException if UxV = (0,0,0) => all 3 point on the same line
      */
     public Plane(Point p1,Point p2,Point p3){
         q0 = p1;
@@ -40,7 +46,7 @@ public class Plane extends Geometry {
             throw new IllegalArgumentException("There is a linear dependence between the vectors");
         normal = n.normalize();
     }
-
+    //region getters
     /**
      * geter point p0
      * @return p0-A point in the plane
@@ -66,7 +72,7 @@ public class Plane extends Geometry {
     public Vector getNormal(Point point) {
         return normal;
     }
-
+    //endregion
     /**
      * find intersections point with the plane
      * @param ray ray that cross the plane
