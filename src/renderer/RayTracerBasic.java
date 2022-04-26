@@ -51,7 +51,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @return the total color at the point including the specular and diffusive
      */
     private Color calcLocalEffects(GeoPoint intersection, Ray ray) {
-        Color color = intersection.geometry.getEmission();
+        Color color = Color.BLACK;
         Vector v = ray.getDir();
         Vector n = intersection.geometry.getNormal(intersection.point); //normal to point
         double nv = alignZero(n.dotProduct(v));

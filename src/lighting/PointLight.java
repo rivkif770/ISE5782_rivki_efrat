@@ -3,6 +3,7 @@ package lighting;
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
+import static primitives.Util.isZero;
 
 /**
  * this class represent a point light like normal lamp. <br/>
