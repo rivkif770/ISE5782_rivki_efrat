@@ -13,7 +13,7 @@ import static java.awt.Color.*;
  *
  * @author Dan
  */
-public class LightsTestss {
+public class LightsTests {
     private Scene scene1 = new Scene("Test scene");
     private Scene scene2 = new Scene("Test scene") //
             .setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
@@ -99,10 +99,10 @@ public class LightsTestss {
     public void sphereSpotAndPoint() {
         scene1.geometries.add(sphere);
         scene1.lighting.add(new SpotLight(spCLG, spCLR, new Vector(-1, 3, -0.5)).setFocus(15).setkL(0.001).setkQ(0.0001));
-        scene1.lighting.add(new SpotLight(spCLF, spCLR, new Vector(-1, 1, -0.5)).setFocus(15).setkL(0.001).setkQ(0.0001));
+        scene1.lighting.add(new SpotLight(spCLF, spCLA, new Vector(-1, 1, -0.5)).setkL(0.001).setkQ(0.0001));
 //        scene1.lighting.add(new PointLight(spCL, spCLE).setkL(0.001).setkQ(0.0002));
-        scene1.lighting.add(new DirectionalLight(spCL, new Vector(1, -1, -0.5)));
-        scene1.lighting.add(new DirectionalLight(spCLM, new Vector(1, 1, -0.5)));
+        scene1.lighting.add(new DirectionalLight(spCL, new Vector(1, 1, -0.5)));
+        scene1.lighting.add(new DirectionalLight(spCLM, new Vector(1, -1, -0.5)));
         ImageWriter imageWriter = new ImageWriter("lightSphereSpotAndPoint", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
