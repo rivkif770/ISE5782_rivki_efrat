@@ -230,7 +230,7 @@ public class RenderTests {
         public void sphereSpotSharp() {
             scene1.geometries.add(sphere);
             scene1.lighting
-                    .add(new SpotLight(spCL, spPL, new Vector(1, 1, -0.5)).setFocus(10).setkL(0.001).setkQ(0.00004));
+                    .add(new SpotLight(spCL, spPL, new Vector(1, 1, -0.5)).setNarrowBeam(10).setkL(0.001).setkQ(0.00004));
 
             ImageWriter imageWriter = new ImageWriter("lightSphereSpotSharp", 500, 500);
             camera1.setImageWriter(imageWriter) //
@@ -245,7 +245,7 @@ public class RenderTests {
         @Test
         public void trianglesSpotSharp() {
             scene2.geometries.add(triangle1, triangle2);
-            scene2.lighting.add(new SpotLight(trCL, trPL, trDL).setFocus(10).setkL(0.001).setkQ(0.00004));
+            scene2.lighting.add(new SpotLight(trCL, trPL, trDL).setNarrowBeam(10).setkL(0.001).setkQ(0.00004));
 
             ImageWriter imageWriter = new ImageWriter("lightTrianglesSpotSharp", 500, 500);
             camera2.setImageWriter(imageWriter) //

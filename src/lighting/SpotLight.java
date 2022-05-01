@@ -57,7 +57,7 @@ public class SpotLight extends PointLight{
      * @param focus the new focus
      * @return this SpotLight
      */
-    public PointLight setFocus(double focus) {
+    public PointLight setNarrowBeam(double focus) {
         focus = focus;
         return this;
     }
