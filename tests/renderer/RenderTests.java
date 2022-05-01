@@ -253,7 +253,6 @@ public class RenderTests {
                     .renderImage() //
                     .writeToImage(); //
         }
-
     }
 }
 
