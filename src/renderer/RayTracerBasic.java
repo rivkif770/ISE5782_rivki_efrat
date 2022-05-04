@@ -28,22 +28,45 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     private static final double DELTA = 0.1;
-    private boolean unshaded(GeoPoint gp, LightSource light, Vector l, Vector n, double nv) {
-        Vector lightDirection = l.scale(-1); // from point to light source
-        Vector epsVector = n.scale(nv < 0 ? DELTA : -DELTA);
-        Point point = gp.point.add(epsVector);
-        double lightDistance = light.getDistance(gp.point);
-        Ray lightRay = new Ray(point, lightDirection);
+    private boolean unshaded(GeoPoint gp,LightSource ls, Vector l, Vector n, double nv) {
+        Vector lightDirection = l.scale(-1); //vector from the point to the light source
+
+        Vector deltaVector=n.scale(nv<0?DELTA:-DELTA);
+        Point p=gp.point.add(deltaVector);
+        Ray lightRay = new Ray(p, lightDirection);
+
+        double lightDistance = ls.getDistance(gp.point);
         List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
-        for (GeoPoint gps : intersections) {
-            if (alignZero(gps.point.distance(gp.point) -lightDistance ) <= 0) {
-                ktr *= gps.geometry.getMaterial().setkD(); //the more transparency the less shadow
-                if (ktr < MIN_CALC_COLOR_K) return 0.0;
+
+        //if there are no intersections return true (there is no shadow)
+        if (intersections == null) {
+            return true;
+        }
+
+        //for each intersection
+        for (GeoPoint intersection : intersections) {
+            //if there are points in the intersectios list that are closer to the point
+            //then light source, return false
+            if (lightDistance > intersection.point.distance(gp.point)) {
+                return false;
             }
-        return intersections== null;
+
+        }
+        return true;
     }
 
-
+//        Vector lightDirection = l.scale(-1); // from point to light source
+//        Vector epsVector = n.scale(nv < 0 ? DELTA : -DELTA);
+//        Point point = gp.point.add(epsVector);
+//        double lightDistance = light.getDistance(gp.point);
+//        Ray lightRay = new Ray(point, lightDirection);
+//        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+//        for (GeoPoint gps : intersections) {
+//            if (alignZero(gps.point.distance(gp.point) -lightDistance ) <= 0) {
+//                ktr *= gps.geometry.getMaterial().setkD(); //the more transparency the less shadow
+//                if (ktr < MIN_CALC_COLOR_K) return 0.0;
+//            }
+//      return intersections== null;
 
     /**
      * According to the pong model
