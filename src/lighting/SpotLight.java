@@ -19,7 +19,7 @@ public class SpotLight extends PointLight{
      * @param kQ - the square attenuation factor
      * @param direction - direction vector for the light of spot light object on scene
      */
-    public SpotLight(Color intensity, Point position, double kC, double kL, double kQ, Vector direction) {
+    public SpotLight(Color intensity, Point position, Double3 kC, Double3 kL, Double3 kQ, Vector direction) {
         super(intensity, position, kC, kL, kQ);
         this.direction = direction.normalize();
     }

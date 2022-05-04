@@ -85,43 +85,29 @@ public class Sphere extends Geometry{
      * @throws IllegalArgumentException if the starting point of the ray equals to the center of the sphere
      */
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        Point p0 = ray.getP0();
-        Vector v = ray.getDir();
-
-        if(p0.equals(center)){
+    protected List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance) {
+        Point rayQ0 = ray.getP0();
+        Vector rayDir = ray.getDir();
+        if(rayQ0.equals(center))
             return List.of(new GeoPoint(this, ray.getPoint(radius)));
-        }
-
-        Vector u = center.subtract(p0);
-        double tm = u.dotProduct(v);
-        double d = alignZero(Math.sqrt(u.lengthSquared() - (tm * tm) ));
-
-        if(d >= radius){
-            return null; // there is no intersections points
-        }
-
-        double th = alignZero(Math.sqrt( (radius * radius) - (d * d) ));
-
+        Vector q0ToCenter = center.subtract(rayQ0);
+        double tm = alignZero(rayDir.dotProduct(q0ToCenter)); ;
+        double d = alignZero(Math.sqrt(q0ToCenter.lengthSquared()-tm*tm));
+        if(d>=radius)
+            return null;
+        double th = alignZero(Math.sqrt(radius*radius - d*d));
         double t1 = alignZero(tm - th);
         double t2 = alignZero(tm + th);
-
-        if(t1 > 0 && t2 > 0){
-            Point p1 = ray.getPoint(t1);
-            Point p2 = ray.getPoint(t2);
-
-            return List.of(new GeoPoint(this, p1), new GeoPoint(this, p2));
-        }
-
-        if(t1 > 0){
-            return List.of(new GeoPoint(this, ray.getPoint(t1)));
-        }
-
-        if(t2 > 0){
-            return List.of(new GeoPoint(this, ray.getPoint(t2)));
-        }
-
-        return null; // 0 points
+        //A list of conditions that verify that the points are indeed intersection points and are within the desired range
+        if((t1 <= 0 )&& ( t2 <= 0 ))
+            return null;
+        if((t1 <= 0)&&( t2 > 0 && (alignZero(t2 - maxDistance) <= 0)))
+            return List.of(new GeoPoint(this,ray.getPoint(t2)));
+        if((t1 > 0 && (alignZero(t1 - maxDistance) <= 0))&&( t2 <= 0 ))
+            return List.of(new GeoPoint(this,ray.getPoint(t1)));
+        if((t1 > 0 && (alignZero(t1 - maxDistance) <= 0))&&( t2 > 0 && (alignZero(t2 - maxDistance) <= 0)))
+            return List.of(new GeoPoint(this,ray.getPoint(t1)), new GeoPoint(this,ray.getPoint(t2)));
+        return null;
     }
 
     /**

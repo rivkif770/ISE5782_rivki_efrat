@@ -17,8 +17,6 @@ import java.util.List;
  * @author rivki and efrat
  */
 public class RayTracerBasic extends RayTracerBase {
-
-
     /**
      * ctor - initializing the scene parameter
      * uses super ctor
@@ -28,6 +26,24 @@ public class RayTracerBasic extends RayTracerBase {
     public RayTracerBasic(Scene scene) {
         super(scene);
     }
+
+    private static final double DELTA = 0.1;
+    private boolean unshaded(GeoPoint gp, LightSource light, Vector l, Vector n, double nv) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Vector epsVector = n.scale(nv < 0 ? DELTA : -DELTA);
+        Point point = gp.point.add(epsVector);
+        double lightDistance = light.getDistance(gp.point);
+        Ray lightRay = new Ray(point, lightDirection);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+        for (GeoPoint gps : intersections) {
+            if (alignZero(gps.point.distance(gp.point) -lightDistance ) <= 0) {
+                ktr *= gps.geometry.getMaterial().setkD(); //the more transparency the less shadow
+                if (ktr < MIN_CALC_COLOR_K) return 0.0;
+            }
+        return intersections== null;
+    }
+
+
 
     /**
      * According to the pong model
@@ -63,8 +79,10 @@ public class RayTracerBasic extends RayTracerBase {
             Vector l = lightSource.getL(intersection.point);
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
-                Color iL = lightSource.getIntensity(intersection.point);
-                color = color.add(iL.scale(calcDiffusive(material, nl)), iL.scale(calcSpecular(material, n, l, v)));
+                if (unshaded(intersection,lightSource, l,n,nv)) {
+                    Color iL = lightSource.getIntensity(intersection.point);
+                    color = color.add(iL.scale(calcDiffusive(material, nl)), iL.scale(calcSpecular(material, n, l, v)));
+                }
             }
         }
         return color;

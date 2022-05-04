@@ -51,17 +51,15 @@ public class Geometries extends Intersectable{
      */
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> result = null;
-        for(var item : intersectables){
-            List<GeoPoint>  itemPoints = item.findGeoIntersectionsHelper(ray);
-            if(itemPoints != null){
-                if(result == null){
-                    result = new LinkedList();
-                }
-                result.addAll(itemPoints);
-            }
+    protected List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance) {
+        List<GeoPoint> bigList = new LinkedList<GeoPoint>();
+        for (Intersectable g: intersectables) {
+            List<GeoPoint> lst = g.findGeoIntersections(ray, maxDistance);
+            if (lst != null)
+                bigList.addAll(lst);
         }
-        return result;
+        if (bigList.size() == 0)
+            return null;
+        return bigList;
     }
 }

@@ -20,6 +20,13 @@ public class Triangle extends Polygon{
     public Triangle(Point p1,Point p2,Point p3) {
         super(p1,p2,p3);
     }
+    /**
+     * Returns the list of the 3 triangle points
+     * @return vertices - the list of the triangle's points
+     */
+    public List<Point> getVertices() {
+        return this.vertices;
+    }
 
     /**
      * Returns normal to point
@@ -56,35 +63,29 @@ public class Triangle extends Polygon{
      * @return list of intersection points that were found
      */
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray){
-        Point p0 = ray.getP0();
-        Vector v = ray.getDir();
-
-        var result = plane.findGeoIntersectionsHelper(ray);
-
-        // if there is no intersections with the plane is a fortiori (kal&homer)
-        // that there is no intersections with the triangle
-        if(result == null){
+    public  List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance){
+        List<GeoPoint> resultOfPlane = plane.findGeoIntersections(ray, maxDistance);
+        if (resultOfPlane == null)
             return null;
-        }
+        List<GeoPoint> result = new LinkedList<GeoPoint>();
 
-        Vector v1 = this.vertices.get(0).subtract(p0),
-                v2 = this.vertices.get(1).subtract(p0),
-                v3 = this.vertices.get(2).subtract(p0);
+        Vector v1 = getVertices().get(0).subtract(ray.getP0());
+        Vector v2 = getVertices().get(1).subtract(ray.getP0());
+        Vector v3 = getVertices().get(2).subtract(ray.getP0());
+        Vector n1 = v1.crossProduct(v2).normalize();
+        Vector n2 = v2.crossProduct(v3).normalize();
+        Vector n3 = v3.crossProduct(v1).normalize();
 
-        Vector n1 = v1.crossProduct(v2).normalize(),
-                n2 = v2.crossProduct(v3).normalize(),
-                n3 = v3.crossProduct(v1).normalize();
+        Vector v = ray.getDir();
+        double r1 = alignZero(v.dotProduct(n1));
+        double r2 = alignZero(v.dotProduct(n2));
+        double r3 = alignZero(v.dotProduct(n3));
 
-        double x1 = alignZero(v.dotProduct(n1)),
-                x2 = alignZero(v.dotProduct(n2)),
-                x3 = alignZero(v.dotProduct(n3));
-
-        boolean allNegative = x1 < 0 && x2 < 0 && x3 < 0;
-        boolean allPositive = x1 > 0 && x2 > 0 && x3 > 0;
-
-        if(allNegative || allPositive){
-            return List.of(new GeoPoint(this, result.get(0).point)); // return the intersections with the plane that the triangle is on
+        if ((r1 > 0 && r2 > 0 && r3 > 0) || (r1 < 0 && r2 < 0 && r3 < 0)) {
+            for (GeoPoint point: resultOfPlane) {
+                result.add(new GeoPoint(this, point.point));
+            }
+            return result;
         }
 
         return null;

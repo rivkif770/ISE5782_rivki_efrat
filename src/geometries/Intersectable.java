@@ -29,6 +29,7 @@ public abstract class Intersectable {
             this.geometry = geometry;
             this.point = point;
         }
+
         /**
          * equals
          * @param o the Object
@@ -68,15 +69,20 @@ public abstract class Intersectable {
      * @param ray ray that cross the geometry
      * @return list of intersection points that were found
      */
-    public List<GeoPoint> findGeoIntersections(Ray ray){
-        return findGeoIntersectionsHelper(ray);
-    }
+
 
     /**
      *
      * @param ray
      * @return
      */
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return findGeoIntersectionsHelperHelper(ray, maxDistance);
+    }
+    protected abstract List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance);
+
 
 }

@@ -1,6 +1,7 @@
 package lighting;
 
 import primitives.Color;
+import primitives.Double3;
 import primitives.Point;
 import primitives.Vector;
 import static primitives.Util.isZero;
@@ -13,7 +14,7 @@ import static primitives.Util.isZero;
  */
 public class PointLight extends Light implements LightSource{
     private Point position;
-    private double kC, kL, kQ;
+    private Double3 kC, kL, kQ;
 
     /**
      * ctor for point light object
@@ -23,7 +24,7 @@ public class PointLight extends Light implements LightSource{
      * @param kL - the linear attenuation factor
      * @param kQ - the square attenuation factor
      */
-    public PointLight(Color intensity, Point position, double kC, double kL, double kQ) {
+    public PointLight(Color intensity, Point position, Double3 kC, Double3 kL, Double3 kQ) {
         super(intensity);
         this.position = position;
         this.kC = kC;
@@ -40,9 +41,9 @@ public class PointLight extends Light implements LightSource{
     public PointLight(Color intensity, Point position) {
         super(intensity);
         this.position = position;
-        this.kC = 1;
-        this.kL = 0;
-        this.kQ = 0;
+        this.kC = new Double3(1);
+        this.kL = Double3.ZERO;
+        this.kQ = Double3.ZERO;
     }
     //region getters
     /**
@@ -58,7 +59,7 @@ public class PointLight extends Light implements LightSource{
             return getIntensity();
         }
 
-        double factor = (kC + dist * kL + (dist * dist) * kQ);
+        Double3 factor = (kC.add(kL.scale(dist))).add(kQ.scale(dist * dist));
 
         return getIntensity().reduce(factor);
     }
@@ -90,29 +91,49 @@ public class PointLight extends Light implements LightSource{
      * @param kC - constant attenuation factor
      * @return - point light object
      */
-    public PointLight setkC(double kC) {
+    public PointLight setkC(Double3 kC) {
         this.kC = kC;
         return this;
     }
-
+    public PointLight setkC(double kC) {
+        this.kC = new Double3(kC);
+        return this;
+    }
     /**
      * builder pattern set - set the kL parameter - the linear attenuation factor
      * @param kL - linear attenuation factor
      * @return - point light object
      */
-    public PointLight setkL(double kL) {
+    public PointLight setkL(Double3 kL) {
         this.kL = kL;
         return this;
     }
-
+    public PointLight setkL(double kL) {
+        this.kL = new Double3(kL);
+        return this;
+    }
     /**
      * builder pattern set - set the kq parameter - the square attenuation factor
      * @param kQ - square attenuation factor
      * @return - point light object
      */
-    public PointLight setkQ(double kQ) {
+    public PointLight setkQ(Double3 kQ) {
         this.kQ = kQ;
         return this;
     }
+    public PointLight setkQ(double kQ) {
+        this.kQ =new Double3(kQ);
+        return this;
+    }
     //endregion
+    /**
+     * get the distance between the starting point of the light source to some point
+     * @param point the point to calculate the distance from
+     * @return the distance between light and the point
+     */
+    @Override
+    public double getDistance(Point point) {
+        return position.distance(point);
+    }
+
 }

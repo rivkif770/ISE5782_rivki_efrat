@@ -79,28 +79,23 @@ public class Plane extends Geometry {
      * @return list of intersection points that were found => p0 + tv
      */
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        Point p0 = ray.getP0();
-        Vector v = ray.getDir();
-
-        if(q0.equals(p0)){
+    protected List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance) {
+        if(isZero(ray.getDir().dotProduct(normal)))
+        {
             return null;
         }
-        Vector n = normal;
-        Vector p0_q0 = q0.subtract(p0);
-        double mone = alignZero(n.dotProduct(p0_q0));
-        if (isZero(mone)){ // the starting point of the ray is inside the plane
+        double t;
+        try {
+            t = (double)normal.dotProduct(q0.subtract(ray.getP0()))/normal.dotProduct(ray.getDir());
+        }
+        catch (IllegalArgumentException e) {
             return null;
         }
-        double nv = alignZero(n.dotProduct(v));
-        if(isZero(nv)){ // the ray is vertical on the plane
+        if (t<=0) return null;
+        //A test that verifies that the point is indeed a point of intersection and is within the desired range
+        if (alignZero(t - maxDistance) > 0)
             return null;
-        }
-        double t = alignZero(mone / nv);
-        if(t > 0){
-            return List.of(new GeoPoint(this,  ray.getPoint(t)));
-        }
-        return null;
+        return List.of(new GeoPoint(this, ray.getPoint(t)));
     }
     @Override
     /**
@@ -123,4 +118,5 @@ public class Plane extends Geometry {
     public String toString() {
         return "Plane:\n"+"p0: " + q0.toString() +"\nnormal: " + normal.toString();
     }
+
 }

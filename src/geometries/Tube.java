@@ -62,9 +62,7 @@ public class Tube extends Geometry{
     //endregion
 
     @Override
-    protected List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        return null;
-    }
+    protected List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance) {return null;}
     /**
      * toString
      * @return string
@@ -76,5 +74,4 @@ public class Tube extends Geometry{
                 ", radius=" + radius +
                 '}';
     }
-
 }
