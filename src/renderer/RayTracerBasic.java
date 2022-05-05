@@ -17,6 +17,9 @@ import java.util.List;
  * @author rivki and efrat
  */
 public class RayTracerBasic extends RayTracerBase {
+    private static final int MAX_CALC_COLOR_LEVEL = 10;
+    private static final double MIN_CALC_COLOR_K = 0.001;
+
     /**
      * ctor - initializing the scene parameter
      * uses super ctor
@@ -76,12 +79,13 @@ public class RayTracerBasic extends RayTracerBase {
      * @param ray the ray that goes out of the camera
      * @return the color at the point
      */
-    private Color calcColor(GeoPoint geoPoint, Ray ray ){
+    private Color calcColor(GeoPoint geoPoint, Ray ray, int level, double k ){
         if(geoPoint == null){
             return scene.background;
         }
-        return scene.ambientLight.getIntensity().add(geoPoint.geometry.getEmission())
+        Color color= scene.ambientLight.getIntensity().add(geoPoint.geometry.getEmission())
                 .add(calcLocalEffects(geoPoint, ray));
+        return 1 == level ? color : color = color.add(calcGlobalEffects(gp, ray, level, k));
     }
     /**
      * Computer lighting effects as at a certain point on geometry

@@ -7,9 +7,32 @@ package primitives;
  */
 public class Material {
     public Double3 kD = new Double3(0,0,0), kS = new Double3(0,0,0);
+    /**
+     * Discount coefficient for transparency
+     */
+    public Double3 kT= new Double3(0,0,0);
+    /**
+     * Coefficient of attenuation for reflection
+     */
+    public Double3 kR= new Double3(0,0,0);
     public int nShininess = 0;
 
-    //region Getters
+    /**
+     * seter of Discount coefficient for transparency
+     * @param kT
+     */
+    public void setkT(Double3 kT) {
+        this.kT = kT;
+    }
+
+    /**
+     *seter of  Coefficient of attenuation for reflection
+     * @param kR
+     */
+    public void setkR(Double3 kR) {
+        this.kR = kR;
+    }
+//region Getters
     /**
      * getting of nShininess
      * @return nShininess
