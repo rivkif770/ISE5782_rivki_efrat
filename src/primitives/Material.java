@@ -17,21 +17,6 @@ public class Material {
     public Double3 kR= new Double3(0,0,0);
     public int nShininess = 0;
 
-    /**
-     * seter of Discount coefficient for transparency
-     * @param kT
-     */
-    public void setkT(Double3 kT) {
-        this.kT = kT;
-    }
-
-    /**
-     *seter of  Coefficient of attenuation for reflection
-     * @param kR
-     */
-    public void setkR(Double3 kR) {
-        this.kR = kR;
-    }
 //region Getters
     /**
      * getting of nShininess
@@ -48,6 +33,16 @@ public class Material {
      * @return kS
      */
     public Double3 getkS() {return kS;}
+    /**
+     * getting of kD
+     * @return kD
+     */
+    public Double3 getkT() {return kT;}
+    /**
+     * getting of kD
+     * @return kD
+     */
+    public Double3 getkR() {return kR;}
     //endregion
 
     //region Setters
@@ -57,13 +52,13 @@ public class Material {
         return this;
     }
 
-    public Material setkS(Double3 kS) {
-        this.kS = kS;
+    public Material setkD(Double kD) {
+        this.kD = new Double3(kD);
         return this;
     }
 
-    public Material setkD(Double kD) {
-        this.kD = new Double3(kD);
+    public Material setkS(Double3 kS) {
+        this.kS = kS;
         return this;
     }
 
@@ -74,6 +69,26 @@ public class Material {
 
     public Material setnShininess(int nShininess) {
         this.nShininess = nShininess;
+        return this;
+    }
+
+    public Material setkT(Double3 kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    public Material setkT(Double kT) {
+        this.kT = new Double3(kT);
+        return this;
+    }
+
+    public Material setkR(Double3 kR) {
+        this.kR = kR;
+        return this;
+    }
+
+    public Material setkR(Double kR) {
+        this.kR = new Double3(kR);
         return this;
     }
     //endregion

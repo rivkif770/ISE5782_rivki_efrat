@@ -11,6 +11,10 @@ import java.util.Objects;
 public class Ray {
     private Point p0;
     private Vector dir;
+    /**
+     * constants for size moving first rays for shading rays
+     */
+    private static final double DELTA = 0.1d;
 
     /**
      * constructor ray
@@ -22,6 +26,17 @@ public class Ray {
         this.p0 = p0;
         this.dir = dir.normalize();
 
+    }
+    /**
+     * constructor for creating a ray with small movement of the starting point
+     * @param point the starting point that on some geometry
+     * @param dir the direction of the ray
+     * @param n normal to the point on some geometry
+     */
+    public Ray(Point point, Vector dir, Vector n) {
+        Vector delta = n.scale(n.dotProduct(dir) > 0d ? DELTA : - DELTA);
+        p0 = point.add(delta);
+        this.dir = dir;
     }
 
     /**
