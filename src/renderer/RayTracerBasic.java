@@ -30,15 +30,15 @@ public class RayTracerBasic extends RayTracerBase {
     public RayTracerBasic(Scene scene) {
         super(scene);
     }
-
-    /**
-     * Calculation of intensity of shadow on pixel's color with consideration of the transparency
-     * @param light - Light source that effects the color and thus the shadow
-     * @param l - Vector from light source to point
-     * @param n - Normal to point
-     * @param geopoint - The point of which the color is calculated
-     * @return - The attenuation coefficient of light - determines the intensity of the shadow
-     */
+/**
+ * Calculation of intensity of shadow on pixel's color with consideration of the transparency
+ *
+ * @param light    - Light source that effects the color and thus the shadow
+ * @param l        - Vector from light source to point
+ * @param n        - Normal to point
+ * @param geopoint - The point of which the color is calculated
+ * @return - The attenuation coefficient of light - determines the intensity of the shadow
+ */
     private Double3 transparency(GeoPoint geopoint, LightSource light, Vector l, Vector n) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(geopoint.point, lightDirection, n); //build ray with delta
@@ -54,26 +54,26 @@ public class RayTracerBasic extends RayTracerBase {
         }
         return ktr;
     }
-
     /**
      * According to the pong model
      * This model is additive in which we connect all the components that will eventually
      * make up an image with background colors, self-colors and texture colors.
+     *
      * @param geoPoint the geometry and the lighted point at him
-     * @param ray the ray that goes out of the camera
+     * @param ray      the ray that goes out of the camera
      * @return the color at the point
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray) {
         return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
                 .add(scene.ambientLight.getIntensity());
     }
-
     /**
      * overload methode of {@link renderer.RayTracerBasic#calcColor(GeoPoint, Ray)}
+     *
      * @param geoPoint the geometry and the lighted point at him
-     * @param ray the ray that goes out of the camera
-     * @param level the level of the recursion
-     * @param k Represents influencing factors of transparency and reflection
+     * @param ray      the ray that goes out of the camera
+     * @param level    the level of the recursion
+     * @param k        Represents influencing factors of transparency and reflection
      * @return the color at the point
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray, int level, Double3 k) {
@@ -84,7 +84,8 @@ public class RayTracerBasic extends RayTracerBase {
     }
     /**
      * Computer lighting effects as at a certain point on geometry
-     * @param gp the geometry and the lighted point at him
+     *
+     * @param gp  the geometry and the lighted point at him
      * @param ray the ray from the camera
      * @return the total color at the point including the specular and diffusive
      */
@@ -103,10 +104,12 @@ public class RayTracerBasic extends RayTracerBase {
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 Double3 ktr = transparency(gp, lightSource, l, n); //intensity of shadow
                 if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
-                    Color iL = lightSource.getIntensity(gp.point).scale(ktr);;
+                    Color iL = lightSource.getIntensity(gp.point).scale(ktr);
+                    ;
                     color = color.add(iL.scale(calcDiffusive(material, nl)), iL.scale(calcSpecular(material, n, l, v)));
                 }
             }
+        }
         return color;
     }
     /**
@@ -213,4 +216,8 @@ public class RayTracerBasic extends RayTracerBase {
         List<GeoPoint> points = scene.geometries.findGeoIntersections(ray);
         return ray.findClosestGeoPoint(points);
     }
+
 }
+
+
+
