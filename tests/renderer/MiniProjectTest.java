@@ -29,7 +29,20 @@ public class MiniProjectTest {
                  new Elepsoaide(new Point(40,35,10),10,17,50).setEmission(new Color(BLUE))
                 .setMaterial(new Material().setkR(1d)),
                  new Elepsoaide(new Point(60,30,0),10,17,50).setEmission(new Color(PINK))
-                .setMaterial(new Material().setkR(1d)));
+                .setMaterial(new Material().setkR(1d)),
+                 new Polygon(new Point(-20,-70,50),new Point(-50,-50,0),new Point(-50,0,0),new Point(-20,-20,50))
+                .setEmission(new Color(240,236,236)),
+                 new Polygon(new Point(-20,-70,50),new Point(0,-50,0),new Point(0,0,0),new Point(-20,-20,50))
+                         .setEmission(new Color(240,236,236)),
+
+
+                new Polygon(new Point(-30,-30,-50),new Point(0,-50,0),new Point(0,0,0),new Point(-30,20,-50))
+                        .setEmission(new Color(235,208,201)),
+                new Polygon(new Point(-30,-30,-50),new Point(-50,-50,0),new Point(-50,0,0),new Point(-30,20,-50))
+                        .setEmission(new Color(235,208,201)),
+
+                new Polygon(new Point(-20,-20,50),new Point(0,0,0),new Point(-30,20,-50),new Point(-50,0,0))
+                        .setEmission(new Color(235,208,150)));
 //                new Triangle(new Point(-50, -50, 0), new Point(50, -50, 0), new Point(0, 100, 50))
 //                        .setEmission(new Color(20,20,20)) //
 //                        .setMaterial(new Material().setkR(0.5)),
