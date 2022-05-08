@@ -28,14 +28,15 @@ public class MiniProjectTest {
                 .setMaterial(new Material().setkR(1d)),
                  new Elepsoaide(new Point(40,35,10),10,17,50).setEmission(new Color(BLUE))
                 .setMaterial(new Material().setkR(1d)),
-                 new Elepsoaide(new Point(60,30,0),10,17,50).setEmission(new Color(PINK))
+                 new Elepsoaide(new Point(60,30,0),10,17,50).setEmission(new Color(blue))
                 .setMaterial(new Material().setkR(1d)));
-//                new Triangle(new Point(-50, -50, 0), new Point(50, -50, 0), new Point(0, 100, 50))
-//                        .setEmission(new Color(20,20,20)) //
-//                        .setMaterial(new Material().setkR(0.5)),
-//                new Triangle(new Point(50, -50, 0), new Point(50, 0, 0), new Point(100, -100, 50))
-//                        .setEmission(new Color(20,20,20))//
-//                        .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(60).setkT(0.6)),
+                new Triangle(new Point(1500, -1500, 5000), new Point(-1500, 1500, 5000),
+                new Point(-1500, -1500, 5000))
+                        .setEmission(new Color(black)) //
+                        .setMaterial(new Material().setkR(0.5));
+              new Triangle(new Point(-10, -60, 302), new Point(0, 0, 302), new Point(10, -60, 302))
+                        .setEmission(new Color(black))//
+                        .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(60).setkT(0.6));
 //                new Triangle(new Point(-50, -50, 0), new Point(-50, 0, 0), new Point(-100, -100, 50))
 //                        .setEmission(new Color(20,20,20))//
 //                        .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(60).setkT(0.6)),//
