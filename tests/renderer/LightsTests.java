@@ -36,8 +36,8 @@ public class LightsTests {
     private Point spPL = new Point(-50, -50, 25); // Sphere test Position of Light
     private Color trCL = new Color(800, 500, 250); // Triangles test Color of Light
     private Color spCL = new Color(800, 500, 0); // Sphere test Color of Light
-    private Color spCLF = new Color(800, 500, 0); // Sphere test Color of Light
-    private Color spCLG = new Color(800, 150, 0); // Sphere test Color of Light
+    private Color spCLF = new Color(0, 500, 500); // Sphere test Color of Light
+    private Color spCLG = new Color(400, 30, 100); // Sphere test Color of Light
     private Color spCLM = new Color(100, 500, 0); // Sphere test Color of Light
     private Vector trDL = new Vector(-2, -2, -2); // Triangles test Direction of Light
     private Material material = new Material().setkD(0.5).setkS(0.5).setnShininess(300);
@@ -98,11 +98,11 @@ public class LightsTests {
     @Test
     public void sphereSpotAndPoint() {
         scene1.geometries.add(sphere);
-        scene1.lighting.add(new SpotLight(spCLG, spCLR, new Vector(-1, 3, -0.5)).setNarrowBeam(15).setkL(0.001).setkQ(0.0001));
+        scene1.lighting.add(new SpotLight(spCLG, spCLR, new Vector(-2, -3, -0.5)).setNarrowBeam(15).setkL(0.001).setkQ(0.0001));
         scene1.lighting.add(new SpotLight(spCLF, spCLA, new Vector(-1, 1, -0.5)).setkL(0.001).setkQ(0.0001));
 //        scene1.lighting.add(new PointLight(spCL, spCLE).setkL(0.001).setkQ(0.0002));
-        scene1.lighting.add(new DirectionalLight(spCL, new Vector(1, 1, -0.5)));
-        scene1.lighting.add(new DirectionalLight(spCLM, new Vector(1, -1, -0.5)));
+        scene1.lighting.add(new DirectionalLight(spCL, new Vector(1, -1, -0.5)));
+        scene1.lighting.add(new DirectionalLight(spCLM, new Vector(1, 2, -0.5)));
         ImageWriter imageWriter = new ImageWriter("lightSphereSpotAndPoint", 500, 500);
         camera1.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene1)) //
@@ -112,7 +112,7 @@ public class LightsTests {
     @Test
     public void trianglSpotAndPoint() {
         scene2.geometries.add(triangle1, triangle2);
-        scene2.lighting.add(new SpotLight(new Color(255, 0, 0), trPL, new Vector(-5, -2, -2)).setNarrowBeam(10).setkL(0.0001).setkQ(0.00004));
+        scene2.lighting.add(new SpotLight(new Color(255, 250, 0), trPL, new Vector(-5, -2, -2)).setNarrowBeam(10).setkL(0.0001).setkQ(0.00004));
         scene2.lighting.add(new SpotLight(new Color(0, 0, 255), trPL, new Vector(10, 2, -2)).setNarrowBeam(10).setkL(0.0001).setkQ(0.00004));
         scene2.lighting.add(new SpotLight(new Color(0, 255, 0), trPL, new Vector(10, -2, -2)).setNarrowBeam(10).setkL(0.0001).setkQ(0.00004));
         scene2.lighting.add(new PointLight(new Color(800, 500, 250), new Point(30, -10, -100)).setkL(0.001).setkQ(0.0002));

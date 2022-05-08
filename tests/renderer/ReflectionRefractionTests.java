@@ -109,22 +109,37 @@ public class ReflectionRefractionTests {
      *
      */
     @Test
-    public void test() {
+    public void specialPicture() {
         Camera camera = new Camera(new Point(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(200, 200).setVPDistance(1000);
 
         scene.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
 
         scene.geometries.add( //
-                new Triangle(new Point(-20, -10, -115), new Point(-8, 25, -147), new Point(75, -50, -150)) //
-                        .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(60)), //
-                new Sphere(new Point(10, 0, -80), 30d).setEmission(new Color(blue)) //
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.6)));
+                new Triangle(new Point(-50, -50, 0), new Point(50, -50, 0), new Point(0, 100, 50))
+                        .setEmission(new Color(20,20,20)) //
+                        .setMaterial(new Material().setkR(0.5)),
+                new Triangle(new Point(50, -50, 0), new Point(50, 0, 0), new Point(100, -100, 50))
+                        .setEmission(new Color(20,20,20))//
+                        .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(60).setkT(0.6)),
+                new Triangle(new Point(-50, -50, 0), new Point(-50, 0, 0), new Point(-100, -100, 50))
+                        .setEmission(new Color(20,20,20))//
+                        .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(60).setkT(0.6)),//
+                new Sphere(new Point(0, -20, 100), 40d).setEmission(new Color(BLUE)) //
+                        .setMaterial(new Material().setkD(0.4).setkS(0.3).setnShininess(100).setkT(0.3)),
+                new Sphere(new Point(0, -20, 100), 15d).setEmission(new Color(RED)) //
+                        .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100)));
+//                new Sphere(new Point(0, -20, 100), 30d).setEmission(new Color(500,20,35)) //
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.6)));
 
-        scene.lighting.add(new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1)) //
-                .setkL(4E-5).setkQ(2E-7));
+        scene.lighting.add(new SpotLight(new Color(1020, 400, 400), new Point(-750, -750, -150), new Vector(-1, -1, -4)) //
+                .setkL(0.00001).setkQ(0.000005));
+        scene.lighting.add(new SpotLight(new Color(255, 250, 0), new Point(2,5,2), new Vector(-5, -2, -2)).setNarrowBeam(10).setkL(0.0001).setkQ(0.00004));
+        scene.lighting.add(new SpotLight(new Color(0, 0, 255), new Point(2,5,2), new Vector(10, 2, -2)).setNarrowBeam(10).setkL(0.0001).setkQ(0.00004));
+        scene.lighting.add(new SpotLight(new Color(0, 255, 0), new Point(2,5,2), new Vector(10, -2, -2)).setNarrowBeam(10).setkL(0.0001).setkQ(0.00004));
+        scene.lighting.add(new PointLight(new Color(800, 500, 250), new Point(30, -10, -100)).setkL(0.001).setkQ(0.0002));
 
-        ImageWriter imageWriter = new ImageWriter("example", 600, 600);
+        ImageWriter imageWriter = new ImageWriter("special picture", 600, 600);
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage() //

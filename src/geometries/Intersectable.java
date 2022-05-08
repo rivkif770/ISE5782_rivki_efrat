@@ -65,13 +65,6 @@ public abstract class Intersectable {
     }
 
     /**
-     * find intersections of ray with geometry shape
-     * @param ray ray that cross the geometry
-     * @return list of intersection points that were found
-     */
-
-
-    /**
      *
      * @param ray
      * @return
