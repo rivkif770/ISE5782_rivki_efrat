@@ -84,66 +84,79 @@ public class MiniProjectTest {
     public void specialPicture1() {
         Camera camera = new Camera(new Point(0, 0, 1000), new Vector(0, 0, -1), new Vector(0, 1, 0)) //
                 .setVPSize(200, 200).setVPDistance(1000);
-        scene.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
+        //scene.setAmbientLight(new AmbientLight(new Color(WHITE), new Double3(0.15)));
         scene.background = new Color(black);
         scene.geometries.add( //
 //                new Sphere(new Point(0, 0, 0), 40).setEmission(new Color(128,128,128))
 //                       .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(100)),
-                new Triangle(A,B,C)
-                       .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(B,E,D)
+                new Triangle(A, B, C)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(E,F,G)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(B, E, D)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(G,H,I)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(E, F, G)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(H,J,K)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(G, H, I)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(K,L,M)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(H, J, K)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(L,N,O)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(K, L, M)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(O,A,P)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(L, N, O)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(J,Q,R)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(O, A, P)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(N,Q,S)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(J, Q, R)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(C,S,T)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(N, Q, S)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(F,T,R)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(C, S, T)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(P,U,V)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(F, T, R)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(D,U,W)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(P, U, V)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(M,V,Z)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(D, U, W)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.9999)),
-                new Triangle(I,Z,W)
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(M, V, Z)
                         .setEmission(new Color(red))//
-                        .setMaterial(new Material().setkD(0.4).setkS(0.3).setnShininess(100).setkT(0.6)),
-                new Plane(new Point(0,-50,0),new Point(1,-50,0),new Point(0,-50,1))
-                        .setMaterial(new Material().setkR(0.5)));
-        scene.lighting.add(new DirectionalLight(new Color(50,1500,400), new Vector(-1, 1, 0)));
-//        scene.lighting.add(new SpotLight(new Color(0, 400, 8000), new Point(60, 50, 20), new Vector(-1, 1, 0)) //
-//                .setkL(0.00001).setkQ(0.000005));
-        scene.lighting.add(new SpotLight(new Color(0, 400, 8000), new Point(60, -50, 20), new Vector(1, 1, 0)) //
-                .setkL(0.00001).setkQ(0.000005));
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.5)),
+                new Triangle(I, Z, W)
+                        .setEmission(new Color(red))//
+                        .setMaterial(new Material().setkD(0.4).setkS(0.3).setnShininess(100).setkT(0.5)),
+                new Plane(new Point(0, -39, 0), new Point(1, -39, 0), new Point(0, -46, 100))
+                        .setEmission(new Color(black))
+                        .setMaterial(new Material().setkR(0.5)),
+                new Sphere(new Point(0, -45, 300), 15)
+                        .setEmission(new Color(BLUE))//
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.1)),
+                new Sphere(new Point(-52, -25, 120), 22)
+                        .setEmission(new Color(BLUE))//
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.1)),
+                new Sphere(new Point(55, -24.5, 150), 25)
+                        .setEmission(new Color(BLUE))//
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.1)));
+//                new Sphere(new Point(0, 0, 0), 50)
+//                        .setEmission(new Color(BLUE))//
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.6)));
+        scene.lighting.add(new DirectionalLight(new Color(50, 1500, 400), new Vector(-1, 1, 0)));
+        scene.lighting.add(new SpotLight(new Color(700, 400, 400), new Point(0, 80, 30), new Vector(0, -1, -10)) //
+                .setkL(4E-5).setkQ(2E-7));
+//        scene.lighting.add(new SpotLight(new Color(0, 400, 8000), new Point(60, -50, 20), new Vector(1, 1, 0)) //
+//                .setkL(4E-5).setkQ(2E-7));
         ImageWriter imageWriter = new ImageWriter("MiniProjectTest1", 500, 500);
         camera.setImageWriter(imageWriter) //
                 .setRayTracer(new RayTracerBasic(scene)) //
