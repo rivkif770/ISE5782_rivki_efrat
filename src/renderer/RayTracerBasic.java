@@ -105,7 +105,6 @@ public class RayTracerBasic extends RayTracerBase {
                 Double3 ktr = transparency(gp, lightSource, l, n); //intensity of shadow
                 if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
                     Color iL = lightSource.getIntensity(gp.point).scale(ktr);
-                    ;
                     color = color.add(iL.scale(calcDiffusive(material, nl)), iL.scale(calcSpecular(material, n, l, v)));
                 }
             }
