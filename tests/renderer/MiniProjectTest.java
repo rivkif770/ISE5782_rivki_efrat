@@ -140,18 +140,18 @@ public class MiniProjectTest {
                 new Plane(new Point(0, -39, 0), new Point(1, -39, 0), new Point(0, -46, 100))
                         .setEmission(new Color(black))
                         .setMaterial(new Material().setkR(0.5)),
-                new Sphere(new Point(0, -45, 300), 15)
-                        .setEmission(new Color(190,45,200))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.1)),
-                new Sphere(new Point(-52, -25, 120), 22)
-                        .setEmission(new Color(117,250,141))//
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.1)),
-                new Sphere(new Point(55, -24.5, 150), 25)
-                        .setEmission(new Color(255,255,145))//
+                new Polygon(new Point(-25, 60, 330),new Point(25, 60, 330),new Point(50, 0, 330),
+                        new Point(25, -60, 330),new Point(-25, -60, 330),new Point(-50, 0, 330))
+                        .setEmission(new Color(BLUE))
                         .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0)));
-//                new Polygon(new Point(-25, 60, 330),new Point(25, 60, 330),new Point(50, 0, 330),
-//                        new Point(25, -60, 330),new Point(-25, -60, 330),new Point(-50, 0, 330))
-//                        .setEmission(new Color(BLUE))
+//                new Sphere(new Point(0, -45, 300), 15)
+//                        .setEmission(new Color(190,45,200))//
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.1)),
+//                new Sphere(new Point(-52, -25, 120), 22)
+//                        .setEmission(new Color(117,250,141))//
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.1)),
+//                new Sphere(new Point(55, -24.5, 150), 25)
+//                        .setEmission(new Color(255,255,145))//
 //                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0)));
 //                new Sphere(new Point(0, 0, 0), 50)
 //                        .setEmission(new Color(BLUE))//
