@@ -45,6 +45,9 @@ public class Material {
     public Double3 getkR() {return kR;}
     //endregion
 
+
+    public double Glossy=0;
+
     //region Setters
     // ** all setters implements the Builder Design Pattern **//
     public Material setkD(Double3 kD) {
@@ -91,5 +94,15 @@ public class Material {
         this.kR = new Double3(kR);
         return this;
     }
+
+    public double getGlossy() {
+        return Glossy;
+    }
+
+    public Material setGlossy(double Glossy) {
+        this.Glossy = Glossy;
+        return this;
+    }
+
     //endregion
 }

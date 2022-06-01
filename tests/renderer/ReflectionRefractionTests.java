@@ -4,11 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static java.awt.Color.*;
 
-import renderer.ImageWriter;
 import lighting.*;
 import geometries.*;
 import primitives.*;
-import renderer.*;
 import scene.Scene;
 
 /**
@@ -60,11 +58,11 @@ public class ReflectionRefractionTests {
                         .setMaterial(new Material().setkD(0.25).setkS(0.25).setnShininess(20)),
                 new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500), new Point(670, 670, 3000)) //
                         .setEmission(new Color(20, 20, 20)) //
-                        .setMaterial(new Material().setkR(1d)),
+                        .setMaterial(new Material().setkR(1d).setGlossy(0.9)),
                 new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
                         new Point(-1500, -1500, -2000)) //
                         .setEmission(new Color(20, 20, 20)) //
-                        .setMaterial(new Material().setkR(0.5)));
+                        .setMaterial(new Material().setkR(0.5).setGlossy(0.9)));
 
         scene.lighting.add(new SpotLight(new Color(1020, 400, 400), new Point(-750, -750, -150), new Vector(-1, -1, -4)) //
                 .setkL(0.00001).setkQ(0.000005));
@@ -93,13 +91,13 @@ public class ReflectionRefractionTests {
                 new Triangle(new Point(-150, -150, -115), new Point(-70, 70, -140), new Point(75, 75, -150)) //
                         .setMaterial(new Material().setkD(0.5).setkS(0.5).setnShininess(60)), //
                 new Sphere(new Point(60, 50, -50), 30d).setEmission(new Color(BLUE)) //
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.6)));
+                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(0.6).setGlossy(0)));
 
         scene.lighting.add(new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1)) //
                 .setkL(4E-5).setkQ(2E-7));
 
         ImageWriter imageWriter = new ImageWriter("refractionShadow", 600, 600);
-        camera.setImageWriter(imageWriter) //
+        camera.setImageWriter(imageWriter).SetantiAliasing(1) //
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage() //
                 .writeToImage();

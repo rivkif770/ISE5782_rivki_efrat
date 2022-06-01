@@ -1,8 +1,10 @@
 package renderer;
 
-        import primitives.Color;
-        import primitives.Ray;
-        import scene.Scene;
+import primitives.Color;
+import primitives.Ray;
+import scene.Scene;
+
+import java.util.List;
 
 /**
  * abstract class to rey tracing
@@ -25,4 +27,6 @@ public abstract class RayTracerBase {
      * @return the color of the object that the ray is interact with
      */
     public abstract Color TraceRay(Ray ray);
+
+    public abstract Color TraceRays(List<Ray> rays);
 }

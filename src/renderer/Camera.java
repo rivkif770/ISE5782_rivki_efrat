@@ -2,7 +2,10 @@ package renderer;
 
 import primitives.*;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
 
 import static primitives.Util.*;
 
@@ -178,7 +181,7 @@ public class Camera {
     /**
      * Checks that all fields are full and creates an image
      */
-    public Camera renderImage() {
+    /*public Camera renderImage() {
         if (p0 == null || vRight == null
                 || vUp == null || vTo == null || distance == 0
                 || width == 0 || height == 0 || centerPoint == null
@@ -188,11 +191,32 @@ public class Camera {
         for (int i = 0; i < imageWriter.getNy(); i++) {
             for (int j = 0; j < imageWriter.getNx(); j++) {
                 // Pixel coloring by ray
-                Ray ray = constructRayThroughPixel(imageWriter.getNx(), imageWriter.getNy(), j, i);
-                imageWriter.writePixel(j,i, rayTracer.TraceRay(ray));
+                List<Ray> rays = constructRays(imageWriter.getNx(), imageWriter.getNy(), j, i,antiAliasing);
+                imageWriter.writePixel(j,i, rayTracer.TraceRays(rays));
 
             }
         }
+        return this;
+    }*/
+
+    /**
+     * Checks that all fields are full and creates an image
+     */
+    public Camera renderImage() {
+        if (p0 == null || vRight == null
+                || vUp == null || vTo == null || distance == 0
+                || width == 0 || height == 0 || centerPoint == null
+                || imageWriter == null || rayTracer == null) {
+            throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
+        }
+        IntStream.range(0, imageWriter.getNy()).parallel().forEach(i -> {
+            IntStream.range(0, imageWriter.getNx()).parallel().forEach(j -> {
+                // Pixel coloring by ray
+                List<Ray> rays = constructRays(imageWriter.getNx(), imageWriter.getNy(), j, i,antiAliasing);
+                imageWriter.writePixel(j,i, rayTracer.TraceRays(rays));
+
+            });
+        });
         return this;
     }
 
@@ -257,6 +281,63 @@ public class Camera {
         return pIJ;
     }
 
+    private Point getCenterOfPixelToRays(int nX, int nY, int j, int i, int numOfRays) {
+        // calculate the ratio of the pixel by the height and by the width of the view plane
+        // the ratio Ry = h/Ny, the height of the pixel
+        double rY = alignZero(height / nY);
+        // the ratio Rx = w/Nx, the width of the pixel
+        double rX = alignZero(width / nX);
+
+        // Xj = (j - (Nx -1)/2) * Rx
+        double xJ = alignZero((j - ((nX - 1d) / 2d)) * rX);
+        // Yi = -(i - (Ny - 1)/2) * Ry
+        double yI = alignZero(-(i - ((nY - 1d) / 2d)) * rY);
+
+        Point pIJ = centerPoint;
+
+        if (!isZero(xJ)) {
+            pIJ = pIJ.add(vRight.scale(xJ));
+        }
+        if (!isZero(yI)) {
+            pIJ = pIJ.add(vUp.scale(yI));
+        }
+
+        pIJ = pIJ.add(vRight.scale(-rX/2 )).add(vUp.scale(-rY/2));
+        return pIJ;
+    }
+
+    public List<Ray> constructRays(int nX, int nY, int j, int i, int numOfRays) {
+        if (numOfRays== 0) {
+            throw new IllegalArgumentException("num Of Rays canot be 0");
+        }
+        if (numOfRays == 1) {
+            return List.of(constructRayThroughPixel(nX, nY, j, i));
+        }
+        else {
+            List<Ray> rays = new LinkedList<>();
+            Point pIJ = getCenterOfPixelToRays(nX, nY, j, i,numOfRays);
+
+            double rY = alignZero(height / nY);
+            // the ratio Rx = w/Nx, the width of the pixel
+            double rX = alignZero(width / nX);
+
+            double pY = alignZero(rY / numOfRays);
+            double pX = alignZero(rX / numOfRays);
+            Point PijTemP = pIJ;
+            for (int p = 1; p < numOfRays; p++) {
+                for (int m = 1; m < numOfRays; m++) {
+                    PijTemP = pIJ.add(vRight.scale(pX * m)).add(vUp.scale(pY * p));
+                    rays.add(new Ray(p0, PijTemP.subtract(p0).normalize()));
+                }
+            }
+
+
+            return rays;
+        }
+
+    }
+
+
     /**
      * Invites the coloring function
      */
@@ -307,6 +388,13 @@ public class Camera {
         vRight.rotateVector(k, cosTheta, sinTheta);
         vUp.rotateVector(k, cosTheta, sinTheta);
 
+        return this;
+    }
+
+    private int antiAliasing=1;
+
+    public Camera SetantiAliasing(int antiAliasing) {
+        this.antiAliasing = antiAliasing;
         return this;
     }
 }
