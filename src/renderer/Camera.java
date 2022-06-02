@@ -202,6 +202,26 @@ public class Camera {
     /**
      * Checks that all fields are full and creates an image
      */
+//    public Camera renderImage() {
+//        if (p0 == null || vRight == null
+//                || vUp == null || vTo == null || distance == 0
+//                || width == 0 || height == 0 || centerPoint == null
+//                || imageWriter == null || rayTracer == null) {
+//            throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
+//        }
+//        IntStream.range(0, imageWriter.getNy()).parallel().forEach(i -> {
+//            IntStream.range(0, imageWriter.getNx()).parallel().forEach(j -> {
+//                // Pixel coloring by ray
+//                List<Ray> rays = constructRays(imageWriter.getNx(), imageWriter.getNy(), j, i,antiAliasing);
+//                imageWriter.writePixel(j,i, rayTracer.TraceRays(rays));
+//
+//            });
+//        });
+//        return this;
+//    }
+    /**
+     * Checks that all fields are full and creates an image
+     */
     public Camera renderImage() {
         if (p0 == null || vRight == null
                 || vUp == null || vTo == null || distance == 0
@@ -209,14 +229,18 @@ public class Camera {
                 || imageWriter == null || rayTracer == null) {
             throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
         }
-        IntStream.range(0, imageWriter.getNy()).parallel().forEach(i -> {
-            IntStream.range(0, imageWriter.getNx()).parallel().forEach(j -> {
-                // Pixel coloring by ray
-                List<Ray> rays = constructRays(imageWriter.getNx(), imageWriter.getNy(), j, i,antiAliasing);
-                imageWriter.writePixel(j,i, rayTracer.TraceRays(rays));
+        int threadsCount = 3;
+        Pixel.initialize(imageWriter.getNy(),imageWriter.getNx() , 1);
 
-            });
-        });
+        while (threadsCount-- > 0) {
+            new Thread(() -> {
+                for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                    imageWriter.writePixel(pixel.col,pixel.row, rayTracer.TraceRays(constructRays(imageWriter.getNx(), imageWriter.getNy(), pixel.col, pixel.row,antiAliasing)));
+            }).start();
+        }
+        Pixel.waitToFinish();
+
+
         return this;
     }
 
