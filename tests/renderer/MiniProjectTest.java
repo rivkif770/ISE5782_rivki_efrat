@@ -323,13 +323,14 @@ public class MiniProjectTest {
                         .setMaterial(new Material().setkD(0.8).setkS(1d).setnShininess(10000).setkR(1d).setGlossy(0.9)));
 
 
+
         scene.lighting.add(new DirectionalLight(new Color(10, 10, 10), new Vector(1, -1, 0)));
         scene.lighting.add(new SpotLight(new Color(400, 400, 1020), new Point(-300, -300, -100), new Vector(2, 2, -3))
                         .setkL(0.00001).setkQ(0.000005).setkC(1));
 
         ImageWriter imageWriter = new ImageWriter("my picture", 1000, 1000);
 
-        camera.setImageWriter(imageWriter) //
+        camera.setImageWriter(imageWriter).SetantiAliasing(2) //
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage()
                 //.moveCamera(new Point(0, 1000, 0),new Point(0, 0, 0))//

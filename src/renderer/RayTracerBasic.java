@@ -166,22 +166,6 @@ public class RayTracerBasic extends RayTracerBase {
         return color;
     }
 
-    /**
-     * Produces a reflection bean that starts from
-     * the point where the ray struck from the camera and goes diagonally to the point
-     * @param geoPoint the point where the ray hit from the camera
-     * @param ray the ray from the camera
-     * @return a reflection ray
-     */
-    private Ray constructReflected(GeoPoint geoPoint, Ray ray) {
-        Vector v = ray.getDir();
-        Vector n = geoPoint.geometry.getNormal(geoPoint.point);
-        double nv = alignZero(v.dotProduct(n));
-        // r = v - 2*(v * n) * n
-        Vector r = v.subtract(n.scale(2d * nv)).normalize();
-
-        return new Ray(geoPoint.point, r, n); //use the constructor with the normal for moving the head a little
-    }
 
     private List<Ray> constructReflectedRays(GeoPoint geoPoint, Ray ray, double Glossy) {
         Vector v = ray.getDir();
@@ -190,20 +174,10 @@ public class RayTracerBasic extends RayTracerBase {
         // r = v - 2*(v * n) * n
         Vector r = v.subtract(n.scale(2d * nv)).normalize();
 
-        return raysGrid( new Ray(geoPoint.point,r,n),1,geoPoint.geometry.getMaterial().getGlossy(), n);
+        return raysGrid( new Ray(geoPoint.point,r,n),1,Glossy, n);
     }
 
-    /**
-     * Produces a transparency bean of rays that starts from
-     * the point where the ray hit from the camera and
-     * goes in the direction almost like the original beam
-     * @param geoPoint the point where the ray hit from the camera
-     * @param inRay the ray from the camera
-     * @return transparency ray
-     */
-    private Ray constructRefracted(GeoPoint geoPoint, Ray inRay) {
-        return new Ray(geoPoint.point, inRay.getDir(), geoPoint.geometry.getNormal(geoPoint.point));
-    }
+
     private List<Ray> constructRefractedRays(GeoPoint geoPoint, Ray inRay, Vector n) {
         return raysGrid(new Ray(geoPoint.point, inRay.getDir(), n),-1,geoPoint.geometry.getMaterial().getGlossy(), n);
     }
