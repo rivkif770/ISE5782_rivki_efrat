@@ -362,10 +362,13 @@ public class MiniProjectTest {
         scene.lighting.add(new DirectionalLight(new Color(10, 10, 10), new Vector(1, -1, 0)));
         scene.lighting.add(new SpotLight(new Color(400, 400, 1020), new Point(-300, -300, -100), new Vector(2, 2, -3))
                         .setkL(0.00001).setkQ(0.000005).setkC(1));
+        scene.lighting.add(new SpotLight(new Color(400, 400, 1020), new Point(0, 0, -1), new Vector(0, 0, -300))
+                .setkL(0.0001).setkQ(0.00005).setkC(0.7));
+
 
         ImageWriter imageWriter = new ImageWriter("my picture", 1000, 1000);
 
-        camera.setImageWriter(imageWriter).SetantiAliasing(2) //
+        camera.setImageWriter(imageWriter).SetantiAliasing(1) //
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage()
                 //.moveCamera(new Point(0, 1000, 0),new Point(0, 0, 0))//

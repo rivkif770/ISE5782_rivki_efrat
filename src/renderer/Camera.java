@@ -177,6 +177,11 @@ public class Camera {
         this.imageWriter = imageWriter;
         return this;
     }
+
+    public Camera SetantiAliasing(int antiAliasing) {
+        this.antiAliasing = antiAliasing;
+        return this;
+    }
 //endregion
 
     /**
@@ -416,12 +421,6 @@ public class Camera {
         vRight.rotateVector(k, cosTheta, sinTheta);
         vUp.rotateVector(k, cosTheta, sinTheta);
 
-        return this;
-    }
-
-
-    public Camera SetantiAliasing(int antiAliasing) {
-        this.antiAliasing = antiAliasing;
         return this;
     }
 }
