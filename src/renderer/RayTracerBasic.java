@@ -209,6 +209,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param ray the ray that came out of the camera
      * @return the color of the object that the ray is interact with
      */
+    @Override
     public Color TraceRay(Ray ray) {
         GeoPoint clossestGeoPoint = findClosestIntersection(ray);
         if (clossestGeoPoint == null)
@@ -220,6 +221,7 @@ public class RayTracerBasic extends RayTracerBase {
      * @param rays the ray that came out of the camera
      * @return the color of the object that the ray is interact with
      */
+    @Override
     public Color TraceRays(List<Ray> rays) {
         Color color=new Color(BLACK);
         for(Ray ray : rays)
@@ -279,7 +281,65 @@ public class RayTracerBasic extends RayTracerBase {
 
         return rays;
     }
+    @Override
+    public Color AdaptiveSuperSamplingRec(Point centerP, double Width, double Height, double minWidth, double minHeight, Point cameraLoc, Vector Vright, Vector Vup, List<Point> prePoints) {
+        if (Width < minWidth * 2 || Height < minHeight * 2) {
+            return this.TraceRay(new Ray(cameraLoc, centerP.subtract(cameraLoc))) ;
+        }
 
+        List<Point> nextCenterPList = new LinkedList<>();
+        List<Point> cornersList = new LinkedList<>();
+        List<primitives.Color> colorList = new LinkedList<>();
+        Point tempCorner;
+        Ray tempRay;
+        for (int i = -1; i <= 1; i += 2){
+            for (int j = -1; j <= 1; j += 2) {
+                tempCorner = centerP.add(Vright.scale(i * Width / 2)).add(Vup.scale(j * Height / 2));
+                cornersList.add(tempCorner);
+                if (prePoints == null || !isInList(prePoints, tempCorner)) {
+                    tempRay = new Ray(cameraLoc, tempCorner.subtract(cameraLoc));
+                    nextCenterPList.add(centerP.add(Vright.scale(i * Width / 4)).add(Vup.scale(j * Height / 4)));
+                    colorList.add(TraceRay(tempRay));
+                }
+            }
+        }
+
+
+        if (nextCenterPList == null || nextCenterPList.size() == 0) {
+            return primitives.Color.BLACK;
+        }
+
+
+        boolean isAllEquals = true;
+        primitives.Color tempColor = colorList.get(0);
+        for (primitives.Color color : colorList) {
+            if (!tempColor.isAlmostEquals(color))
+                isAllEquals = false;
+        }
+        if (isAllEquals && colorList.size() > 1)
+            return tempColor;
+
+
+        tempColor = primitives.Color.BLACK;
+        for (Point center : nextCenterPList) {
+            tempColor = tempColor.add(AdaptiveSuperSamplingRec(center, Width/2,  Height/2,  minWidth,  minHeight ,  cameraLoc, Vright, Vup, cornersList));
+        }
+        return tempColor.reduce(nextCenterPList.size());
+
+
+    }
+//    @Override
+//    public Color AdaptiveSuperSamplingRec(Point centerP, double Width, double Height, double minWidth, double minHeight, Point cameraLoc,Vector Vright,Vector Vup, List<Point> prePoints)  {
+//
+//
+//    }
+    private boolean isInList(List<Point> pointsList, Point point) {
+        for (Point tempPoint : pointsList) {
+            if(point.equals(tempPoint))
+                return true;
+        }
+        return false;
+    }
 }
 
 

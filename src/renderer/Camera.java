@@ -28,6 +28,7 @@ public class Camera {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
     private int antiAliasing=1;
+    private boolean adaptive = false;
 
     /**
      * constructor for camera
@@ -182,6 +183,13 @@ public class Camera {
         this.antiAliasing = antiAliasing;
         return this;
     }
+    public Camera Setadaptive(boolean adaptive) {
+        this.adaptive = adaptive;
+        return this;
+    }
+    public void setP0(double x,double y, double z) {
+        this.p0=new Point(x,y,z);
+    }
 //endregion
 
     /**
@@ -205,9 +213,29 @@ public class Camera {
 //        return this;
 //    }
 
-    /**
-     * Checks that all fields are full and creates an image
-     */
+//    /**
+//     * Checks that all fields are full and creates an image
+//     */
+//    public Camera renderImage() {
+//        if (p0 == null || vRight == null
+//                || vUp == null || vTo == null || distance == 0
+//                || width == 0 || height == 0 || centerPoint == null
+//                || imageWriter == null || rayTracer == null) {
+//            throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
+//        }
+//        Pixel.initialize(imageWriter.getNy(),imageWriter.getNx() , 1);
+//        IntStream.range(0, imageWriter.getNy()).parallel().forEach(i -> {
+//            IntStream.range(0, imageWriter.getNx()).parallel().forEach(j -> {
+//                // Pixel coloring by ray
+//                List<Ray> rays = constructRays(imageWriter.getNx(), imageWriter.getNy(), j, i,antiAliasing);
+//                imageWriter.writePixel(j,i, rayTracer.TraceRays(rays));
+//                Pixel.pixelDone();
+//                Pixel.printPixel();
+//
+//            });
+//        });
+//        return this;
+//    }
     public Camera renderImage() {
         if (p0 == null || vRight == null
                 || vUp == null || vTo == null || distance == 0
@@ -215,19 +243,49 @@ public class Camera {
                 || imageWriter == null || rayTracer == null) {
             throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
         }
-        Pixel.initialize(imageWriter.getNy(),imageWriter.getNx() , 1);
-        IntStream.range(0, imageWriter.getNy()).parallel().forEach(i -> {
-            IntStream.range(0, imageWriter.getNx()).parallel().forEach(j -> {
-                // Pixel coloring by ray
-                List<Ray> rays = constructRays(imageWriter.getNx(), imageWriter.getNy(), j, i,antiAliasing);
-                imageWriter.writePixel(j,i, rayTracer.TraceRays(rays));
-                Pixel.pixelDone();
-                Pixel.printPixel();
+        int threadsCount = 3;
+        Pixel.initialize(imageWriter.getNy(), imageWriter.getNx(), 1);
 
-            });
-        });
+
+        if (!adaptive) {
+            while (threadsCount-- > 0) {
+                new Thread(() -> {
+                    for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                        imageWriter.writePixel(pixel.col, pixel.row, rayTracer.TraceRays(constructRays(imageWriter.getNx(), imageWriter.getNy(), pixel.col, pixel.row, antiAliasing)));
+                }).start();
+            }
+            Pixel.waitToFinish();
+        } else {
+            while (threadsCount-- > 0) {
+                new Thread(() -> {
+                    for (Pixel pixel = new Pixel(); pixel.nextPixel(); Pixel.pixelDone())
+                        imageWriter.writePixel(pixel.col, pixel.row, AdaptiveSuperSampling(imageWriter.getNx(), imageWriter.getNy(), pixel.col, pixel.row, antiAliasing));
+                }).start();
+            }
+            Pixel.waitToFinish();
+        }
         return this;
     }
+
+    private Color AdaptiveSuperSampling(int nX, int nY, int j, int i,  int numOfRays)  {
+        Vector Vright = vRight;
+        Vector Vup = vUp;
+        Point cameraLoc = this.getP0();
+        int numOfRaysInRowCol = (int)Math.floor(Math.sqrt(numOfRays));
+        if(numOfRaysInRowCol == 1)  return rayTracer.TraceRay(constructRayThroughPixel(nX, nY, j, i));
+
+        Point pIJ = getCenterOfPixelToRays(nX, nY, j, i);
+
+        double rY = alignZero(height / nY);
+        // the ratio Rx = w/Nx, the width of the pixel
+        double rX = alignZero(width / nX);
+
+
+        double PRy = rY/numOfRaysInRowCol;
+        double PRx = rX/numOfRaysInRowCol;
+        return rayTracer.AdaptiveSuperSamplingRec(pIJ, rX, rY, PRx, PRy,cameraLoc,Vright, Vup,null);
+    }
+
     /**
      * Checks that all fields are full and creates an image
      */
@@ -314,7 +372,7 @@ public class Camera {
         return pIJ;
     }
 
-    private Point getCenterOfPixelToRays(int nX, int nY, int j, int i, int numOfRays) {
+    private Point getCenterOfPixelToRays(int nX, int nY, int j, int i) {
         // calculate the ratio of the pixel by the height and by the width of the view plane
         // the ratio Ry = h/Ny, the height of the pixel
         double rY = alignZero(height / nY);
@@ -335,7 +393,6 @@ public class Camera {
             pIJ = pIJ.add(vUp.scale(yI));
         }
 
-        pIJ = pIJ.add(vRight.scale(-rX/2 )).add(vUp.scale(-rY/2));
         return pIJ;
     }
 
@@ -348,7 +405,7 @@ public class Camera {
         }
         else {
             List<Ray> rays = new LinkedList<>();
-            Point pIJ = getCenterOfPixelToRays(nX, nY, j, i,numOfRays);
+            Point pIJ = getCenterOfPixelToRays(nX, nY, j, i);
 
             double rY = alignZero(height / nY);
             // the ratio Rx = w/Nx, the width of the pixel
@@ -378,49 +435,94 @@ public class Camera {
         imageWriter.writeToImage();
     }
     /**
-     * moving the camera from her location
-     * @param newPosition the new position of the camera
-     * @param newPointOfView new point of view of the camera
-     * @return the new camera from the new position to the new point of view
+     * Adds the given amount to the camera's position
+     *
+     * @return the current camera
      */
-    public Camera moveCamera(Point newPosition, Point newPointOfView) {
-        // the new vTo of the the camera
-        Vector new_vTo = newPointOfView.subtract(newPosition).normalize();
-        // the angle between the new vTo and the old
-        double theta = new_vTo.dotProduct(vTo);
-        // axis vector for the rotation
-        Vector k = vTo.crossProduct(new_vTo).normalize();
-
-        vTo = new_vTo;
-        p0 = newPosition;
-
-        return rotateCamera(theta, k);
-    }
-    /**
-     * Rotate the camera by rotating the vectors of the camera directions <br/>
-     * According the Rodrigues' rotation formula
-     * @param theta angle theta according to the right hand rule in degrees
-     * @return this camera after the rotating
-     */
-    public Camera rotateCamera(double theta) {
-        return rotateCamera(theta, vTo);
+    public Camera move(Vector amount) {
+        p0 = p0.add(amount);
+        return this;
     }
 
     /**
-     * Rotate the camera by rotating the vectors of the camera directions <br/>
-     * According the Rodrigues' rotation formula
-     * @param theta angle theta according to the right hand rule in degrees
-     * @param k axis vector for the rotation
-     * @return this camera after the rotating
+     * Adds x, y, z to the camera's position
+     *
+     * @return the current camera
      */
-    private Camera rotateCamera(double theta, Vector k) {
-        double radianAngle = Math.toRadians(theta);
-        double cosTheta = alignZero(Math.cos(radianAngle));
-        double sinTheta = alignZero(Math.sin(radianAngle));
+    public Camera move(double x, double y, double z) {
+        return move(new Vector(x, y, z));
+    }
 
-        vRight.rotateVector(k, cosTheta, sinTheta);
-        vUp.rotateVector(k, cosTheta, sinTheta);
+    /**
+     * Rotates the camera around the axes with the given angles
+     *
+     * @param amount vector of angles
+     * @return the current camera
+     */
+    public Camera rotate(Vector amount) {
+        return rotate(amount.getX(), amount.getY(), amount.getZ());
+    }
+
+
+    /**
+     * Rotates the camera around the axes with the given angles
+     *
+     * @param x angles to rotate around the x axis
+     * @param y angles to rotate around the y axis
+     * @param z angles to rotate around the z axis
+     * @return the current camera
+     */
+    public Camera rotate(double x, double y, double z) {
+        vTo = vTo.rotateX(x).rotateY(y).rotateZ(z);
+        vUp = vUp.rotateX(x).rotateY(y).rotateZ(z);
+        vRight = vTo.crossProduct(vUp);
 
         return this;
     }
+//    /**
+//     * moving the camera from her location
+//     * @param newPosition the new position of the camera
+//     * @param newPointOfView new point of view of the camera
+//     * @return the new camera from the new position to the new point of view
+//     */
+//    public Camera moveCamera(Point newPosition, Point newPointOfView) {
+//        // the new vTo of the the camera
+//        Vector new_vTo = newPointOfView.subtract(newPosition).normalize();
+//        // the angle between the new vTo and the old
+//        double theta = new_vTo.dotProduct(vTo);
+//        // axis vector for the rotation
+//        Vector k = vTo.crossProduct(new_vTo).normalize();
+//
+//        vTo = new_vTo;
+//        p0 = newPosition;
+//
+//        return rotateCamera(theta, k);
+//    }
+//    /**
+//     * Rotate the camera by rotating the vectors of the camera directions <br/>
+//     * According the Rodrigues' rotation formula
+//     * @param theta angle theta according to the right hand rule in degrees
+//     * @return this camera after the rotating
+//     */
+//    public Camera rotateCamera(double theta) {
+//        return rotateCamera(theta, vTo);
+//    }
+//
+//    /**
+//     * Rotate the camera by rotating the vectors of the camera directions <br/>
+//     * According the Rodrigues' rotation formula
+//     * @param theta angle theta according to the right hand rule in degrees
+//     * @param k axis vector for the rotation
+//     * @return this camera after the rotating
+//     */
+//    private Camera rotateCamera(double theta, Vector k) {
+//        double radianAngle = Math.toRadians(theta);
+//        double cosTheta = alignZero(Math.cos(radianAngle));
+//        double sinTheta = alignZero(Math.sin(radianAngle));
+//
+//        vRight.rotateVector(k, cosTheta, sinTheta);
+//        vUp.rotateVector(k, cosTheta, sinTheta);
+//
+//        return this;
+//    }
 }

@@ -312,39 +312,22 @@ public class MiniProjectTest {
                 new Sphere(new Point(241, 154, -200),10)
                         .setEmission(new Color(GREEN))//
                         .setMaterial(new Material().setkD(0.8).setkS(0.8).setnShininess(30).setkT(0.0).setkR(0.0)) ,
-                new Polygon(new Point(-250,-210,-400),new Point(-150,-210,-400),new Point(-150,200,-400),
-                        new Point(-250,200,-400))
-                        .setEmission(new Color(BLACK))
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(1)),
-                new Polygon(new Point(-110,-210,-400),new Point(-10,-210,-400),new Point(-10,200,-400),
-                        new Point(-110,200,-400))
-                        .setEmission(new Color(BLACK))
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(0.75)),
-                new Polygon(new Point(30,-210,-400),new Point(130,-210,-400),new Point(130,200,-400),
-                        new Point(30,200,-400))
-                        .setEmission(new Color(BLACK))
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(0.5)),
-                new Polygon(new Point(170,-210,-400),new Point(270,-210,-400),new Point(270,200,-400),
-                        new Point(170,200,-400))
-                        .setEmission(new Color(BLACK))
-                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(0.25)),
-//                new Polygon(new Point(-100,-210,-400),new Point(100,-210,-400),new Point(300,5,-400),
-//                        new Point(100,200,-400),new Point(-100,200,-400),new Point(-300,5,-400))
-//                        .setEmission(new Color(BLUE))
-//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0)),
-//                new Triangle(new Point(-115, -210, -400), new Point(-300, 5, -400), new Point(-300, -210, -400))
-//                        .setEmission(new Color(BLACK))//
-//                        .setMaterial(new Material().setkD(0.8).setkS(1.0).setnShininess(10000).setkR(1d).setGlossy(0.9)),
-//                new Triangle(new Point(500, 200, -100), new Point(-500, 200, -100), new Point(1800, 200, -700))
-//                        .setEmission(new Color(BLACK))//
-//                        .setMaterial(new Material().setkD(0.8).setkS(1.0).setnShininess(10000).setkR(1d).setGlossy(0.9)),
-//
-//                new Triangle(new Point(500, 200, -100), new Point(-500, 200, -100), new Point(1800, 200, -700))
-//                        .setEmission(new Color(BLACK))//
-//                        .setMaterial(new Material().setkD(0.8).setkS(1.0).setnShininess(10000).setkR(1d).setGlossy(0.9)),
-//                new Triangle(new Point(500, 200, -100), new Point(-500, 200, -100), new Point(1800, 200, -700))
-//                        .setEmission(new Color(BLACK))//
-//                        .setMaterial(new Material().setkD(0.8).setkS(1.0).setnShininess(10000).setkR(1d).setGlossy(0.9)),
+//                new Polygon(new Point(-250,-210,-400),new Point(-150,-210,-400),new Point(-150,200,-400),
+//                        new Point(-250,200,-400))
+//                        .setEmission(new Color(BLACK))
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(1)),
+//                new Polygon(new Point(-110,-210,-400),new Point(-10,-210,-400),new Point(-10,200,-400),
+//                        new Point(-110,200,-400))
+//                        .setEmission(new Color(BLACK))
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(0.75)),
+//                new Polygon(new Point(30,-210,-400),new Point(130,-210,-400),new Point(130,200,-400),
+//                        new Point(30,200,-400))
+//                        .setEmission(new Color(BLACK))
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(0.5)),
+//                new Polygon(new Point(170,-210,-400),new Point(270,-210,-400),new Point(270,200,-400),
+//                        new Point(170,200,-400))
+//                        .setEmission(new Color(BLACK))
+//                        .setMaterial(new Material().setkD(0.2).setkS(0.2).setnShininess(30).setkT(1.0).setGlossy(0.25)),
 
 
 //endregion
@@ -362,13 +345,10 @@ public class MiniProjectTest {
         scene.lighting.add(new DirectionalLight(new Color(10, 10, 10), new Vector(1, -1, 0)));
         scene.lighting.add(new SpotLight(new Color(400, 400, 1020), new Point(-300, -300, -100), new Vector(2, 2, -3))
                         .setkL(0.00001).setkQ(0.000005).setkC(1));
-        scene.lighting.add(new SpotLight(new Color(400, 400, 1020), new Point(0, 0, -1), new Vector(0, 0, -300))
-                .setkL(0.0001).setkQ(0.00005).setkC(0.7));
-
 
         ImageWriter imageWriter = new ImageWriter("my picture", 1000, 1000);
 
-        camera.setImageWriter(imageWriter).SetantiAliasing(1) //
+        camera.setImageWriter(imageWriter).SetantiAliasing(9) //
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage()
                 //.moveCamera(new Point(0, 1000, 0),new Point(0, 0, 0))//
