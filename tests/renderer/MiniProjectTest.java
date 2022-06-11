@@ -334,21 +334,24 @@ public class MiniProjectTest {
 
                 new Triangle(new Point(500, 200, -100), new Point(-500, 200, -100), new Point(1800, 200, -700))
                         .setEmission(new Color(BLACK))//
-                        .setMaterial(new Material().setkD(0.8).setkS(1.0).setnShininess(10000).setkR(1d).setGlossy(0.9)),
+                        .setMaterial(new Material().setkD(0.8).setkS(1.0).setnShininess(10000).setkR(1d).setGlossy(0.0)),
 
                 new Triangle(new Point(-500, 200, -100), new Point(1800, 200, -700), new Point(-1800, 200, -700))
                         .setEmission(new Color(BLACK))//
-                        .setMaterial(new Material().setkD(0.8).setkS(1d).setnShininess(10000).setkR(1d).setGlossy(0.9)));
+                        .setMaterial(new Material().setkD(0.8).setkS(1d).setnShininess(10000).setkR(1d).setGlossy(0.0)));
 
 
 
         scene.lighting.add(new DirectionalLight(new Color(10, 10, 10), new Vector(1, -1, 0)));
         scene.lighting.add(new SpotLight(new Color(400, 400, 1020), new Point(-300, -300, -100), new Vector(2, 2, -3))
-                        .setkL(0.00001).setkQ(0.000005).setkC(1));
+                .setkL(0.00001).setkQ(0.000005).setkC(1));
+        scene.lighting.add(new SpotLight(new Color(400, 400, 1020), new Point(0, 0, -1), new Vector(0, 0, -300))
+                .setkL(0.0001).setkQ(0.00005).setkC(0.7));
 
         ImageWriter imageWriter = new ImageWriter("my picture", 1000, 1000);
 
-        camera.setImageWriter(imageWriter).SetantiAliasing(9) //
+        camera.setImageWriter(imageWriter).SetantiAliasing(9)
+                .Setadaptive(true)//
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage()
                 //.moveCamera(new Point(0, 1000, 0),new Point(0, 0, 0))//
