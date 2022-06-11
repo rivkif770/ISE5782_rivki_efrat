@@ -5,7 +5,6 @@ import primitives.*;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
-import java.util.stream.IntStream;
 
 import static primitives.Util.*;
 
@@ -29,6 +28,7 @@ public class Camera {
     private RayTracerBase rayTracer;
     private int antiAliasing=1;
     private boolean adaptive = false;
+    private int threadsCount = 1;
 
     /**
      * constructor for camera
@@ -183,7 +183,7 @@ public class Camera {
      *
      * @return the Camera object
      */
-    public Camera SetantiAliasing(int antiAliasing) {
+    public Camera setantiAliasing(int antiAliasing) {
         this.antiAliasing = antiAliasing;
         return this;
     }
@@ -192,8 +192,17 @@ public class Camera {
      *
      * @return the Camera object
      */
-    public Camera Setadaptive(boolean adaptive) {
+    public Camera setadaptive(boolean adaptive) {
         this.adaptive = adaptive;
+        return this;
+    }
+    /**
+     * set the threadsCount
+     *
+     * @return the Camera object
+     */
+    public Camera setthreadsCount(int threadsCount) {
+        this.threadsCount = threadsCount;
         return this;
     }
     /**
@@ -256,7 +265,6 @@ public class Camera {
                 || imageWriter == null || rayTracer == null) {
             throw new MissingResourceException("Missing camera data", Camera.class.getName(), null);
         }
-        int threadsCount = 3;
         Pixel.initialize(imageWriter.getNy(), imageWriter.getNx(), 1);
 
 

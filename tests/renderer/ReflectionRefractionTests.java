@@ -97,7 +97,7 @@ public class ReflectionRefractionTests {
                 .setkL(4E-5).setkQ(2E-7));
 
         ImageWriter imageWriter = new ImageWriter("refractionShadow", 600, 600);
-        camera.setImageWriter(imageWriter).SetantiAliasing(1) //
+        camera.setImageWriter(imageWriter).setantiAliasing(1) //
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage() //
                 .writeToImage();

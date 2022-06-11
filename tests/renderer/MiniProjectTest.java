@@ -351,8 +351,9 @@ public class MiniProjectTest {
         ImageWriter imageWriter = new ImageWriter("my picture", 1000, 1000);
 
         camera.setImageWriter(imageWriter)
-                .SetantiAliasing(3)
-                .Setadaptive(true)//
+                .setantiAliasing(3)
+                .setadaptive(true)
+                .setthreadsCount(3)
                 .setRayTracer(new RayTracerBasic(scene)) //
                 .renderImage()
                 //.moveCamera(new Point(0, 1000, 0),new Point(0, 0, 0))//
