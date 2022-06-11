@@ -8,6 +8,12 @@ import primitives.*;
  */
 public interface LightSource {
     /**
+     * get Distance of Light
+     * @param point of Distance
+     * @return Color in point
+     */
+    double getDistance(Point point);
+    /**
      * get Intensity in point
      * @param p
      * @return Color in point
@@ -20,6 +26,5 @@ public interface LightSource {
      * @return Vector
      */
     public Vector getL(Point p);
-    double getDistance(Point point);
 
 }
