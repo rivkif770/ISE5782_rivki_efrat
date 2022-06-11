@@ -65,16 +65,30 @@ public abstract class Intersectable {
     }
 
     /**
-     *
-     * @param ray
-     * @return
+     *find intersections of ray with geometry shape
+     * @param ray ray that cross the geometry
+     * @return The list of intersection points includes the geometry in which the cut is placed
      */
     public final List<GeoPoint> findGeoIntersections(Ray ray) {
         return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
+
+    /**
+     * Auxiliary function for the function of find Intersections
+     * @param ray ray that cross the geometry
+     * @param maxDistance
+     * @return
+     */
     public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         return findGeoIntersectionsHelperHelper(ray, maxDistance);
     }
+
+    /**
+     * Auxiliary function for the function of find Intersections, and it is implemented in all departments
+     * @param ray ray that cross the geometry
+     * @param maxDistance
+     * @return
+     */
     protected abstract List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance);
 
 

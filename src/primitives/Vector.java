@@ -93,27 +93,6 @@ public class Vector extends Point {
         return new Vector(xyz.reduce(length()));
     }
 
-//    /**
-//     * rotate the vectors by Rodrigues' rotation formula:
-//     * vRot = V * cos(theta) + (K x V) * sin(theta) + K * (K*V) * (1 - cos(theta))
-//     * V is this vector
-//     * @param k the axis vector of rotation
-//     * @param cosTheta cos(theta)
-//     * @param sinTheta sin(theta)
-//     */
-//    public void rotateVector(Vector k,  double cosTheta, double sinTheta) {
-//        Vector vRot;
-//        if (cosTheta == 0d) {
-//            vRot = k.crossProduct(this).scale(sinTheta);
-//        }
-//        else {
-//            vRot = this.scale(cosTheta);
-//            if (sinTheta != 0d) {
-//                vRot = vRot.add(k.crossProduct(this).scale(sinTheta));
-//            }
-//        }
-//        xyz = vRot.normalize().xyz;
-//    }
     /**
      * Rotates the vector around the x-axis
      *
@@ -163,6 +142,11 @@ public class Vector extends Point {
 
         return new Vector(x, y, z);
     }
+    /**
+     *Compares two Vectors
+     * @param o
+     * @return Boolean value
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

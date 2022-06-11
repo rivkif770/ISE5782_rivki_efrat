@@ -17,6 +17,13 @@ public class Elepsoaide extends Geometry{
     double radius3 ;
     double radius1 ;
 
+    /**
+     * constructor for Elepsoaide
+     * @param center center of Elepsoaide
+     * @param radius1 Length
+     * @param radius2 Width
+     * @param radius3 Height
+     */
     public Elepsoaide(Point center, double radius1 , double radius2 ,double radius3 ) {//simple constructor
         this.center = center ;
         this.radius1 = radius1 ;
@@ -61,8 +68,12 @@ public class Elepsoaide extends Geometry{
 //    }
 
 
-
-
+    /**
+     * find intersections point with the Elepsoaide
+     * @param ray ray that cross the Elepsoaide
+     * @param maxDistance Maximum distance
+     * @return list of intersection points that were found
+     */
     @Override
     protected List<GeoPoint> findGeoIntersectionsHelperHelper(Ray ray, double maxDistance) {
         Point centerZero = new Point(0,0,0);
