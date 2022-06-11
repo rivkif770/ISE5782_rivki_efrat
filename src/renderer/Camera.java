@@ -178,15 +178,28 @@ public class Camera {
         this.imageWriter = imageWriter;
         return this;
     }
-
+    /**
+     * set the anti Aliasing
+     *
+     * @return the Camera object
+     */
     public Camera SetantiAliasing(int antiAliasing) {
         this.antiAliasing = antiAliasing;
         return this;
     }
+    /**
+     * set the adaptive
+     *
+     * @return the Camera object
+     */
     public Camera Setadaptive(boolean adaptive) {
         this.adaptive = adaptive;
         return this;
     }
+    /**
+     * set senter the camera
+     *
+     */
     public void setP0(double x,double y, double z) {
         this.p0=new Point(x,y,z);
     }
@@ -267,6 +280,16 @@ public class Camera {
         return this;
     }
 
+    /**
+     * Checks the color of the pixel with the help of individual rays and averages between them and only
+     * if necessary continues to send beams of rays in recursion
+     * @param nX Pixel length
+     * @param nY Pixel width
+     * @param j The position of the pixel relative to the y-axis
+     * @param i The position of the pixel relative to the x-axis
+     * @param numOfRays The amount of rays sent
+     * @return Pixel color
+     */
     private Color AdaptiveSuperSampling(int nX, int nY, int j, int i,  int numOfRays)  {
         Vector Vright = vRight;
         Vector Vup = vUp;
@@ -274,7 +297,7 @@ public class Camera {
         int numOfRaysInRowCol = (int)Math.floor(Math.sqrt(numOfRays));
         if(numOfRaysInRowCol == 1)  return rayTracer.TraceRay(constructRayThroughPixel(nX, nY, j, i));
 
-        Point pIJ = getCenterOfPixelToRays(nX, nY, j, i);
+        Point pIJ = getCenterOfPixel(nX, nY, j, i);
 
         double rY = alignZero(height / nY);
         // the ratio Rx = w/Nx, the width of the pixel
@@ -372,30 +395,15 @@ public class Camera {
         return pIJ;
     }
 
-    private Point getCenterOfPixelToRays(int nX, int nY, int j, int i) {
-        // calculate the ratio of the pixel by the height and by the width of the view plane
-        // the ratio Ry = h/Ny, the height of the pixel
-        double rY = alignZero(height / nY);
-        // the ratio Rx = w/Nx, the width of the pixel
-        double rX = alignZero(width / nX);
-
-        // Xj = (j - (Nx -1)/2) * Rx
-        double xJ = alignZero((j - ((nX - 1d) / 2d)) * rX);
-        // Yi = -(i - (Ny - 1)/2) * Ry
-        double yI = alignZero(-(i - ((nY - 1d) / 2d)) * rY);
-
-        Point pIJ = centerPoint;
-
-        if (!isZero(xJ)) {
-            pIJ = pIJ.add(vRight.scale(xJ));
-        }
-        if (!isZero(yI)) {
-            pIJ = pIJ.add(vUp.scale(yI));
-        }
-
-        return pIJ;
-    }
-
+    /**
+     * Creates a beam of rays into a square grid
+     * @param nX Pixel length
+     * @param nY Pixel width
+     * @param j Position the pixel on the y-axis inside the grid
+     * @param i Position the pixel on the x-axis inside the grid
+     * @param numOfRays The root of the number of beams sent per pixel
+     * @return List of beams of rays
+     */
     public List<Ray> constructRays(int nX, int nY, int j, int i, int numOfRays) {
         if (numOfRays== 0) {
             throw new IllegalArgumentException("num Of Rays can not be 0");
@@ -405,7 +413,7 @@ public class Camera {
         }
         else {
             List<Ray> rays = new LinkedList<>();
-            Point pIJ = getCenterOfPixelToRays(nX, nY, j, i);
+            Point pIJ = getCenterOfPixel(nX, nY, j, i);
 
             double rY = alignZero(height / nY);
             // the ratio Rx = w/Nx, the width of the pixel
@@ -427,58 +435,57 @@ public class Camera {
 
     }
 
-
     /**
      * Invites the coloring function
      */
     public void writeToImage() {
         imageWriter.writeToImage();
     }
-    /**
-     * Adds the given amount to the camera's position
-     *
-     * @return the current camera
-     */
-    public Camera move(Vector amount) {
-        p0 = p0.add(amount);
-        return this;
-    }
+//    /**
+//     * Adds the given amount to the camera's position
+//     *
+//     * @return the current camera
+//     */
+//    public Camera move(Vector amount) {
+//        p0 = p0.add(amount);
+//        return this;
+//    }
+//
+//    /**
+//     * Adds x, y, z to the camera's position
+//     *
+//     * @return the current camera
+//     */
+//    public Camera move(double x, double y, double z) {
+//        return move(new Vector(x, y, z));
+//    }
 
-    /**
-     * Adds x, y, z to the camera's position
-     *
-     * @return the current camera
-     */
-    public Camera move(double x, double y, double z) {
-        return move(new Vector(x, y, z));
-    }
-
-    /**
-     * Rotates the camera around the axes with the given angles
-     *
-     * @param amount vector of angles
-     * @return the current camera
-     */
-    public Camera rotate(Vector amount) {
-        return rotate(amount.getX(), amount.getY(), amount.getZ());
-    }
-
-
-    /**
-     * Rotates the camera around the axes with the given angles
-     *
-     * @param x angles to rotate around the x axis
-     * @param y angles to rotate around the y axis
-     * @param z angles to rotate around the z axis
-     * @return the current camera
-     */
-    public Camera rotate(double x, double y, double z) {
-        vTo = vTo.rotateX(x).rotateY(y).rotateZ(z);
-        vUp = vUp.rotateX(x).rotateY(y).rotateZ(z);
-        vRight = vTo.crossProduct(vUp);
-
-        return this;
-    }
+//    /**
+//     * Rotates the camera around the axes with the given angles
+//     *
+//     * @param amount vector of angles
+//     * @return the current camera
+//     */
+//    public Camera rotate(Vector amount) {
+//        return rotate(amount.getX(), amount.getY(), amount.getZ());
+//    }
+//
+//
+//    /**
+//     * Rotates the camera around the axes with the given angles
+//     *
+//     * @param x angles to rotate around the x axis
+//     * @param y angles to rotate around the y axis
+//     * @param z angles to rotate around the z axis
+//     * @return the current camera
+//     */
+//    public Camera rotate(double x, double y, double z) {
+//        vTo = vTo.rotateX(x).rotateY(y).rotateZ(z);
+//        vUp = vUp.rotateX(x).rotateY(y).rotateZ(z);
+//        vRight = vTo.crossProduct(vUp);
+//
+//        return this;
+//    }
 //    /**
 //     * moving the camera from her location
 //     * @param newPosition the new position of the camera
@@ -525,4 +532,49 @@ public class Camera {
 //
 //        return this;
 //    }
+    /**
+     * Adds the given amount to the camera's position
+     *
+     * @return the current camera
+     */
+    public Camera move(Vector amount) {
+        p0 = p0.add(amount);
+        return this;
+    }
+
+    /**
+     * Adds x, y, z to the camera's position
+     *
+     * @return the current camera
+     */
+    public Camera move(double x, double y, double z) {
+        return move(new Vector(x, y, z));
+    }
+
+    /**
+     * Rotates the camera around the axes with the given angles
+     *
+     * @param amount vector of angles
+     * @return the current camera
+     */
+    public Camera rotate(Vector amount) {
+        return rotate(amount.getX(), amount.getY(), amount.getZ());
+    }
+
+
+    /**
+     * Rotates the camera around the axes with the given angles
+     *
+     * @param x angles to rotate around the x axis
+     * @param y angles to rotate around the y axis
+     * @param z angles to rotate around the z axis
+     * @return the current camera
+     */
+    public Camera rotate(double x, double y, double z) {
+        vTo = vTo.rotateX(x).rotateY(y).rotateZ(z);
+        vUp = vUp.rotateX(x).rotateY(y).rotateZ(z);
+        vRight = vTo.crossProduct(vUp);
+
+        return this;
+    }
 }

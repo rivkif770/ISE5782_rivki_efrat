@@ -165,8 +165,12 @@ public class RayTracerBasic extends RayTracerBase {
         }
         return color;
     }
-
-
+    /**  Produces a reflection bean that starts from
+     * the point where the ray struck from the camera and goes diagonally to the point
+     * @param geoPoint the point where the ray hit from the camera
+     * @param ray the ray from the camera
+     * @return a reflection ray
+     */
     private List<Ray> constructReflectedRays(GeoPoint geoPoint, Ray ray, double Glossy) {
         Vector v = ray.getDir();
         Vector n = geoPoint.geometry.getNormal(geoPoint.point);
@@ -177,7 +181,14 @@ public class RayTracerBasic extends RayTracerBase {
         return raysGrid( new Ray(geoPoint.point,r,n),1,Glossy, n);
     }
 
-
+    /**
+     * Produces a transparency bean of rays that starts from
+     * the point where the ray hit from the camera and
+     * goes in the direction like the original ray
+     * @param geoPoint the point where the ray hit from the camera
+     * @param inRay the ray from the camera
+     * @return transparency ray
+     */
     private List<Ray> constructRefractedRays(GeoPoint geoPoint, Ray inRay, Vector n) {
         return raysGrid(new Ray(geoPoint.point, inRay.getDir(), n),-1,geoPoint.geometry.getMaterial().getGlossy(), n);
     }
@@ -248,6 +259,14 @@ public class RayTracerBasic extends RayTracerBase {
         return ray.findClosestGeoPoint(points);
     }
 
+    /**
+     * Building a beam of rays for transparency and reflection
+     * @param ray The beam coming out of the camera
+     * @param direction the vector
+     * @param glossy The amount of gloss
+     * @param n normal
+     * @return Beam of rays
+     */
     List<Ray> raysGrid(Ray ray, int direction, double glossy, Vector n){
         int numOfRowCol = isZero(glossy)? 1: (int)Math.ceil(Math.sqrt(glossinessRaysNum));
         if (numOfRowCol == 1) return List.of(ray);
@@ -281,6 +300,20 @@ public class RayTracerBasic extends RayTracerBase {
 
         return rays;
     }
+
+    /**
+     * Checks the color of the pixel with the help of individual rays and averages between them and only if necessary continues to send beams of rays in recursion
+     * @param centerP center pixl
+     * @param Width Length
+     * @param Height width
+     * @param minWidth min Width
+     * @param minHeight min Height
+     * @param cameraLoc Camera location
+     * @param Vright Vector right
+     * @param Vup vector up
+     * @param prePoints pre Points
+     * @return Pixel color
+     */
     @Override
     public Color AdaptiveSuperSamplingRec(Point centerP, double Width, double Height, double minWidth, double minHeight, Point cameraLoc, Vector Vright, Vector Vup, List<Point> prePoints) {
         if (Width < minWidth * 2 || Height < minHeight * 2) {
@@ -328,11 +361,13 @@ public class RayTracerBasic extends RayTracerBase {
 
 
     }
-//    @Override
-//    public Color AdaptiveSuperSamplingRec(Point centerP, double Width, double Height, double minWidth, double minHeight, Point cameraLoc,Vector Vright,Vector Vup, List<Point> prePoints)  {
-//
-//
-//    }
+
+    /**
+     * Find a point in the list
+     * @param pointsList the list
+     * @param point the point that we look for
+     * @return
+     */
     private boolean isInList(List<Point> pointsList, Point point) {
         for (Point tempPoint : pointsList) {
             if(point.equals(tempPoint))

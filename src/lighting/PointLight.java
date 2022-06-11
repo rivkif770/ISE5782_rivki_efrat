@@ -95,6 +95,11 @@ public class PointLight extends Light implements LightSource{
         this.kC = kC;
         return this;
     }
+    /**
+     * builder pattern set - set the kC parameter - the constant attenuation factor
+     * @param kC - constant attenuation factor
+     * @return - point light object
+     */
     public PointLight setkC(double kC) {
         this.kC = new Double3(kC);
         return this;
@@ -108,6 +113,11 @@ public class PointLight extends Light implements LightSource{
         this.kL = kL;
         return this;
     }
+    /**
+     * builder pattern set - set the kL parameter - the linear attenuation factor
+     * @param kL - linear attenuation factor
+     * @return - point light object
+     */
     public PointLight setkL(double kL) {
         this.kL = new Double3(kL);
         return this;
@@ -121,6 +131,11 @@ public class PointLight extends Light implements LightSource{
         this.kQ = kQ;
         return this;
     }
+    /**
+     * builder pattern set - set the kq parameter - the square attenuation factor
+     * @param kQ - square attenuation factor
+     * @return - point light object
+     */
     public PointLight setkQ(double kQ) {
         this.kQ =new Double3(kQ);
         return this;

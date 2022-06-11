@@ -150,12 +150,22 @@ public class Color {
             throw new IllegalArgumentException("Can't scale a color by a by a number lower than 1");
         return new Color(rgb.d1 / k.d1, rgb.d2 / k.d2, rgb.d3 / k.d3);
     }
+
+    /**
+     * Checks if the color is almost equal
+     * @param color primitives
+     * @return
+     */
     public  boolean isAlmostEquals(primitives.Color color) {
 
         return  (Math.abs(this.rgb.d1-color.rgb.d1)<= 2) &&
                 (Math.abs(this.rgb.d2-color.rgb.d2)<= 2) &&
                 (Math.abs(this.rgb.d3-color.rgb.d3)<= 2);
     }
+    /**
+     * toString
+     * @return string
+     */
     @Override
     public String toString() {
         return "rgb:" + rgb;
