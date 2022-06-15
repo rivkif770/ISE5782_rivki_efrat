@@ -302,7 +302,8 @@ public class RayTracerBasic extends RayTracerBase {
     }
 
     /**
-     * Checks the color of the pixel with the help of individual rays and averages between them and only if necessary continues to send beams of rays in recursion
+     * Checks the color of the pixel with the help of individual rays and averages between
+     * them and only if necessary continues to send beams of rays in recursion
      * @param centerP center pixl
      * @param Width Length
      * @param Height width
