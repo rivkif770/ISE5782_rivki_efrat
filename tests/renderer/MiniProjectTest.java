@@ -355,17 +355,38 @@ public class MiniProjectTest {
 
         ImageWriter imageWriter = new ImageWriter("my picture ", 1000, 1000);
 
-        camera.setImageWriter(imageWriter)
-                .setantiAliasing(1)
-                .setadaptive(true)
-                .setthreadsCount(3)
-                .setRayTracer(new RayTracerBasic(scene)) //
-                .renderImage()
-                //.moveCamera(new Point(0, 1000, 0),new Point(0, 0, 0))//
-                .writeToImage();
-        //render.renderImage();
-        imageWriter.writeToImage();
+        int frames = 10;
+        double angle = 360d / frames;
+        double angleRadians = 2 * Math.PI / frames;
+        double radius = camera.getP0().subtract(Point.ZERO).length();
 
+        for (int i = 0; i < frames; i++) {
+            camera.rotate(0, angle, 0);
+            camera.setP0(
+                    Math.sin(angleRadians * (i + 1)) * radius,
+                    0,
+                    Math.cos(angleRadians * (i + 1)) * radius
+            );
 
+            camera.setImageWriter(new ImageWriter("moveTest" + (i + 1), 500, 500))
+                    .setantiAliasing(1)
+                    .setadaptive(true)
+                    .setthreadsCount(3)
+                    .setRayTracer(new RayTracerBasic(scene))
+                    .renderImage();
+            camera.writeToImage();
+
+//        camera.setImageWriter(imageWriter)
+//                .setantiAliasing(1)
+//                .setadaptive(true)
+//                .setthreadsCount(3)
+//                .setRayTracer(new RayTracerBasic(scene)) //
+//                .renderImage()
+//                //.moveCamera(new Point(0, 1000, 0),new Point(0, 0, 0))//
+//                .writeToImage();
+//        //render.renderImage();
+//        imageWriter.writeToImage();
+
+        }
     }
 }
